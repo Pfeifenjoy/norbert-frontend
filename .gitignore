@@ -102,3 +102,6 @@ fabric.properties
 ### Intellij Patch ###
 *.iml
 
+
+#Build
+build/
