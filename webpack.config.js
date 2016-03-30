@@ -45,6 +45,11 @@ module.exports = {
                 loader: "url-loader",
                 query: { mimetype: "image/png" }
             },
+            {
+                test: /\.jpg$/,
+                loader: "url-loader",
+                query: { mimetype: "image/jpg" }
+            },
             { test: /bootstrap\/js\//, loader: 'imports?jQuery=jquery' },
             { test: /\.css$/, loader: "style!css" },
             {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},

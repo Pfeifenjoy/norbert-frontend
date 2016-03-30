@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import RegisterForm from "../components/RegisterForm";
 import ConfigStore from "../stores/ConfigStore";
 import BaseUrlInput from "../components/BaseUrlInput";
+let logo = require("../img/logo.png");
 
 export default class Register extends Component {
 
@@ -18,7 +19,9 @@ export default class Register extends Component {
     }
     render() {
         return <div id="login_wrapper">
-            <section id="login" className="container">
+            <section className="login container">
+                <img src={logo} className="logo" />
+                <h2 className="title">Norbert</h2>
                 <div className="row">
                     <div className="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
                         <RegisterForm target={this.state.config.serverRoot + this.state.config.apiLocation} wss={this.state.config.wssRoot}>
