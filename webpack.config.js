@@ -1,6 +1,7 @@
 var dev = process.env.NODE_ENV !== "production";
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
  
 var entry = [];
 entry.push("./src/index");
@@ -26,8 +27,10 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"
-        })
+        }),
+        new HtmlWebpackPlugin()
     ],
+    favicon: "./src/img/logo.png",
     host: "192.168.178.100",
     module: {
         loaders: [
