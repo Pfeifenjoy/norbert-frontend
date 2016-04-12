@@ -11,17 +11,16 @@ import Layout from "./pages/Layout";
 import Register from "./pages/Register";
 import Main from "./pages/Main";
 
+import {requireAuth} from "./util/auth";
 
 const app = document.getElementById("content");
 
 ReactDom.render(
     <Router history={hashHistory}>
         <Route path="/" component={Layout}>
-            <IndexRoute component={Login}></IndexRoute>
-            <Route path="/app" component={Main} />
-        </Route>
-        <Route path="/register" component={Layout}>
-            <IndexRoute component={Register}></IndexRoute>
+            <IndexRoute component={Main} onEnter={requireAuth}></IndexRoute>
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
         </Route>
     </Router>
 , app);
