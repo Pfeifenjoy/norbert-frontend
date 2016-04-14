@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import ConfigStore from "../stores/ConfigStore";
 import BaseUrlInput from "../components/BaseUrlInput";
 import {Link} from "react-router";
-import { newUser } from "../actions/UserActions";
+import { login } from "../actions/UserActions";
+import UserStore from "../stores/UserStore";
 let logo = require("../img/logo.png");
 
 export default class Login extends Component {
@@ -11,7 +12,7 @@ export default class Login extends Component {
         super(props);
         this.state = {
             config: ConfigStore.getAll(),
-            submitFailed: false,
+            submitFailed: UserStore.authenticationFailed,
             loading: false,
             username: "",
             password: ""
@@ -21,6 +22,11 @@ export default class Login extends Component {
         ConfigStore.on("change", () => {
             this.setState({ config: ConfigStore.getAll() });
         });
+        UserStore.on("change", () => {
+            this.setState({
+                submitFailed: UserStore.authenticationFailed
+            })
+        })
     }
     render() {
         const usernameState = "form-group" + (this.state.submitFailed && this.state.username.trim() === "" ? " has-error" : "");
@@ -98,26 +104,6 @@ export default class Login extends Component {
             this.setState({submitFailed: true});
             return;
         }
-
-        $.ajax({
-            url: this.state.config.serverRoot + this.state.config.apiLocation + "/authenticate",
-            method: "POST",
-            data: { username, password },
-            crossDomain: true
-        }).done(oData => {
-            newUser(username);
-            const { location } = this.props;
-
-            if(location.state && location.state.nextPathname) {
-                this.context.router.replace(location.state.nextPathname);
-            }
-            else {
-                this.context.router.replace("/");
-            }
-        }).fail(() => {
-            this.setState({submitFailed: true, loading: false, password: ""});
-        }).finally(() => {
-            this.setState({authenticating: false});
-        });
+        login(username, password);
     }
 }

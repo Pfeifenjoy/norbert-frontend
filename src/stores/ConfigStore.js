@@ -21,6 +21,10 @@ class ConfigStore extends EventEmitter {
         return this.config;
     }
 
+    get apiLocation() {
+        return this.config.serverRoot + this.config.apiLocation;
+    }
+
     updateServerRoot(sNewRoot) {
         this.config.serverRoot = sNewRoot;
         this.save();

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import configStore from "../stores/ConfigStore";
 import deviceStore from "../stores/DeviceStore";
-import {changeServerRoot} from "../actions/LoginActions";
+import {changeServerRoot} from "../actions/ConfigActions";
 
 export default class BaseUrlInput extends Component {
     constructor(props) {
@@ -9,7 +9,6 @@ export default class BaseUrlInput extends Component {
         this.state = {
             config: configStore.getAll(),
             device: deviceStore.getAll()
-
         }
     }
     componentWillMount() {

@@ -6,28 +6,43 @@ class UserStore extends EventEmitter {
     constructor() {
         super();
 
-        this.config = {
-            username: "",
-            authenticated: false
+        this.data = {
+            username: sessionStorage.getItem("username") || "",
+            authenticationFailed: false
         };
-
-        $.ajax("authenticated")
-        .done(authed => { 
-            this.config.authenticated = authed;
-            this.emit("change");
-        });
     }
     getAll() {
-        return this.config;
+        return this.data;
     }
     get authenticated() {
-        return this.config.authenticated;
+        return this.data.username === "" ? false : true;
     }
+    get username() {
+        return this.data.username;
+    }
+    get authenticationFailed() {
+        return this.data.authenticationFailed;
+    }
+
     handleActions(action) {
         switch (action.type) {
-            case constants.USER_AUTHENTICATION:
+            case constants.AUTHENTICATED:
             {
-                this.config.loggedIn = action.result;
+                this.data.username = action.username;
+                sessionStorage.setItem("username", action.username);
+                this.data.authenticationFailed = false;
+                this.emit("change");
+                break;
+            }
+            case constants.UNAUTHENTICATED:
+            {
+                this.data.username = "";
+                this.emit("change");
+                break;
+            }
+            case constants.AUTHENTICATION_FAILED:
+            {
+                this.data.authenticationFailed = true;
                 this.emit("change");
                 break;
             }
