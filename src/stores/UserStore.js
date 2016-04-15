@@ -15,7 +15,7 @@ class UserStore extends EventEmitter {
         return this.data;
     }
     get authenticated() {
-        return this.data.username === "" ? false : true;
+        return true; //TODO this.data.username === "" ? false : true;
     }
     get username() {
         return this.data.username;

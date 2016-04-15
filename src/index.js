@@ -1,6 +1,7 @@
 require("./less/index.less");
 require("bootstrap-webpack");
 require("font-awesome-webpack");
+import "babel-polyfill";
 
 import React from "react";
 import ReactDom from "react-dom";

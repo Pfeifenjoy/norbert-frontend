@@ -6,24 +6,28 @@ class EntryStore extends EventEmitter {
     constructor() {
         super();
         this.data = {
-            entries: {
-                "0": {
-                    title: "1 Test"
-                }
-            }
+            entries: []
         }
     }
-    getAll() {
-        return this.data;
+    get entries() {
+        return this.data.entries;
     }
-    get(id) {
+    getEntry(id) {
         return this.data.entries[id];
     }
 
     handleActions(action) {
         switch(action.type) {
-            case constants.ADD_ENTRY: {
+            case constants.UPDATE_ENTRIES: {
+                this.data.entries = action.entries;
+                break;
+            }
+            case constants.CREATE_ENTRY: {
                 this.data.entries.push(action.entry);
+                break;
+            }
+            case constants.UPDATE_ENTRY: {
+                this.data.entry[this.data.entries.indexOf(this.get(action.id))] = action.entry;
                 break;
             }
             case constants.DELETE_ENTRY: {

@@ -6,7 +6,6 @@ export default class AddComponentButton extends Component {
     render() {
         return <SplitButton
             bsStyle="primary"
-            bsSize="medium"
             title={<div className="fa fa-plus"></div>}
         >
                 <MenuItem>Erinnerung</MenuItem>

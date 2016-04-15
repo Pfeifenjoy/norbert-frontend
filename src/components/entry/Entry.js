@@ -3,12 +3,12 @@ import {Modal, Button, ButtonGroup} from "react-bootstrap";
 import AddComponentDialog from "./AddComponentDialog";
 
 export default class Entry extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             components: [],
             mouseOver: false,
-            edit: false
+            edit: props.edit || false
         };
     }
     render() {
@@ -28,7 +28,6 @@ export default class Entry extends Component {
                     <ButtonGroup>
                         <Button className="fa fa-trash"
                             bsStyle="danger"
-                            bsSize="medium"
                         ></Button>
                         <AddComponentDialog />
                     </ButtonGroup>
@@ -56,6 +55,8 @@ export default class Entry extends Component {
     }
     handleEditClose() {
         this.setState({edit: false});
+        if(this.props.onCancel)
+            this.props.onCancel();
     }
     handleAddComponent() {
         

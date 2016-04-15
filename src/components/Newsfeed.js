@@ -1,28 +1,82 @@
 import React, {Component} from "react";
 import Entry from "./entry/Entry.js";
 import EntryStore from "../stores/EntryStore";
+import { Button, Grid, Col, Row } from "react-bootstrap";
+import { updateEntries } from "../actions/EntryActions";
+
+const smEntry = 6;
+const mdEntry = 6;
+const lgEntry = 4;
 
 export default class Newsfeed extends Component {
     constructor() {
         super();
+        updateEntries();
         this.state = {
-            entries: EntryStore.getAll().entries
+            entries: EntryStore.entries,
+            newEntry: undefined
         }
     }
-    render() {
-        const entries = [];
-        for(let id in this.state.entries){
-            entries.push(
-                <div key={id} className="col-lg-3 col-md-6 col-sm-8">
-                    <Entry id={id} data={this.state.entries[id]} />
-                </div>
-            );
 
+    componentWillMount() {
+        EntryStore.on("change", () => {
+            console.log(EntryStore.entries)
+            this.setState({
+                entries: EntryStore.entries
+            });
+        });
+    }
+    render() {
+        let lastI = 0;
+        const entries = this.state.entries.map((entry, i) => {
+            ++lastI;
+            return <Col key={i} lg={lgEntry} md={mdEntry} sm={smEntry}>
+                <Entry data={entry} />
+            </Col>;
+        });
+        if(this.state.newEntry) {
+            entries.push(
+                <Col key={lastI} lg={lgEntry} md={mdEntry} sm={smEntry}>
+                    <Entry
+                        data={this.state.newEntry}
+                        edit={true}
+                        onSave={this.handleEntryCreated.bind(this)}
+                        onCancel={this.handleAddEntryCancel.bind(this)}
+                    />
+                </Col>
+            );
         }
-        return <div className="newsfeed">
-            <div className="entries col-lg-8">
+
+        return <Grid className="newsfeed">
+            <Row className="entries">
                 {entries}
-            </div>
-            </div>;
+            </Row>
+            
+            <Row>
+                <Col lg={12} className="footer">
+                    <Button
+                        className="fa fa-plus"
+                        bsStyle="primary"
+                        onClick={this.handleAddEntry.bind(this)}
+                    />
+                </Col>
+            </Row>
+        </Grid>;
+    }
+
+    handleAddEntry() {
+        this.setState({
+            newEntry: {}
+        });
+    }
+
+    handleEntryCreated() {
+         
+    }
+    handleAddEntryCancel() {
+        this.setState({
+            newEntry: undefined
+        })
+    
     }
 }
