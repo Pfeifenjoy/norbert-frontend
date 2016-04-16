@@ -34,7 +34,7 @@ class EntryStore extends EventEmitter {
                 break;
             }
             case constants.UPDATE_ENTRY: {
-                this.data.entry[this.getEntryIndex(action.id)] = action.entry;
+                this.data.entries[this.getEntryIndex(action.id)] = action.entry;
                 break;
             }
             case constants.DELETE_ENTRY: {

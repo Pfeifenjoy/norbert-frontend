@@ -37,7 +37,6 @@ export function updateEntry(entry) {
 
 export function deleteEntry(id) {
     //TODO request
-    console.log(id);
     dispatcher.dispatch({
         type: constants.DELETE_ENTRY,
         id

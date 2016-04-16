@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import {Modal, Button, ButtonGroup, SplitButton, MenuItem} from "react-bootstrap";
+import {Modal, Button, ButtonGroup, SplitButton, MenuItem, Input} from "react-bootstrap";
 import AddComponentDialog from "./AddComponentDialog";
-import { deleteEntry } from "../../actions/EntryActions";
+import { deleteEntry, updateEntry } from "../../actions/EntryActions";
 import EntryStore from "../../stores/EntryStore";
 
 const Entry = React.createClass({
@@ -37,7 +37,14 @@ const Entry = React.createClass({
         //Dialog to edit the entry
         const editModal = <Modal show={this.state.edit} onHide={this.handleEditClose}>
                 <Modal.Header>
-                    <Modal.Title>{this.state.data.title}</Modal.Title>
+                    <Modal.Title>
+                         <Input
+                             type="text"
+                             className="title"
+                             value={this.state.data.title}
+                             onChange={this.updateTitle}
+                         />
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 </Modal.Body>
@@ -91,8 +98,10 @@ const Entry = React.createClass({
     handleAddText() {
     },
 
-    handleChangeTitle() {
-    
+    updateTitle(oEvent) {
+        let entry = this.state.data;
+        entry.title = oEvent.target.value;
+        updateEntry(entry);
     }
 });
 
