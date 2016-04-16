@@ -27,22 +27,25 @@ class EntryStore extends EventEmitter {
         switch(action.type) {
             case constants.UPDATE_ENTRIES: {
                 this.data.entries = action.entries;
+                this.emit("change");
                 break;
             }
             case constants.CREATE_ENTRY: {
                 this.data.entries.push(action.entry);
+                this.emit("change")
                 break;
             }
             case constants.UPDATE_ENTRY: {
                 this.data.entries[this.getEntryIndex(action.id)] = action.entry;
+                this.emit("updateEntry", action.id)
                 break;
             }
             case constants.DELETE_ENTRY: {
                 this.data.entries.splice(this.getEntryIndex(action.id), 1);
+                this.emit("change");
                 break;
             }
         }
-        this.emit("change");
     }
 }
 

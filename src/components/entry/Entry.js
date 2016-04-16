@@ -22,6 +22,14 @@ const Entry = React.createClass({
                 this.setState({data});
             }
         });
+        EntryStore.on("updateEntry", id => {
+            console.log(id);
+            if(this.props.id === id) {
+                this.setState({
+                    data: EntryStore.getEntry(this.props.id)
+                })
+            }
+        });
     },
 
     propTypes: {
@@ -103,7 +111,7 @@ const Entry = React.createClass({
     },
     handleDelete() {
         //TODO Ask if the entry should be deleted
-        deleteEntry(this.state.id);
+        deleteEntry(this.props.id);
     },
     handleAddText() {
     },
@@ -116,8 +124,7 @@ const Entry = React.createClass({
     handleCompChange(oComp) {
         this.state.data.components[oComp.id].data = oComp.data;
         this.setState({data: this.state.data});
-        console.log(this.state.data.components);
-        updateEntry(this.state.data, this.state.id);
+        updateEntry(this.state.data, this.props.id);
     }
 });
 

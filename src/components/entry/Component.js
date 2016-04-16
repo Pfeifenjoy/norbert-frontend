@@ -19,6 +19,7 @@ const Component = React.createClass({
         onChange: React.PropTypes.func
     },
     handleChange(oEvent) {
+        this.setState({data: oEvent.target.value});
         this.props.onChange({
             data: oEvent.target.value,
             id: this.props.id
