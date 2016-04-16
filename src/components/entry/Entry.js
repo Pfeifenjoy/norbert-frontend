@@ -3,6 +3,7 @@ import {Modal, Button, ButtonGroup, SplitButton, MenuItem, Input} from "react-bo
 import AddComponentDialog from "./AddComponentDialog";
 import { deleteEntry, updateEntry } from "../../actions/EntryActions";
 import EntryStore from "../../stores/EntryStore";
+import { createComponent } from "./Component";
 
 const Entry = React.createClass({
     getInitialState() {
@@ -34,6 +35,13 @@ const Entry = React.createClass({
     },
     render() {
 
+        const editComponents = this.state.data.components ? this.state.data.components.map((comp, i) => {
+            return createComponent(comp, true, this.handleCompChange, i);
+        }) : [];
+        const components = this.state.data.components ? this.state.data.components.map((comp, i) => {
+            return createComponent(comp, false, null, i);
+        }) : [];
+
         //Dialog to edit the entry
         const editModal = <Modal show={this.state.edit} onHide={this.handleEditClose}>
                 <Modal.Header>
@@ -47,6 +55,7 @@ const Entry = React.createClass({
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    {editComponents}
                 </Modal.Body>
                 <Modal.Footer>
                     <ButtonGroup>
@@ -74,6 +83,7 @@ const Entry = React.createClass({
                 <div className={"fa fa-pencil modifyButton " + (this.state.mouseOver ? "" : "hidden")} 
                      onClick={this.handleEdit}></div>
                 <h3 className="title">{this.state.data.title}</h3>
+                {components}
                 {editModal}
             </div>;
     },
@@ -102,6 +112,12 @@ const Entry = React.createClass({
         let entry = this.state.data;
         entry.title = oEvent.target.value;
         updateEntry(entry);
+    },
+    handleCompChange(oComp) {
+        this.state.data.components[oComp.id].data = oComp.data;
+        this.setState({data: this.state.data});
+        console.log(this.state.data.components);
+        updateEntry(this.state.data, this.state.id);
     }
 });
 

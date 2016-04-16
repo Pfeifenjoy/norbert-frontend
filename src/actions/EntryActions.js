@@ -8,7 +8,13 @@ export function updateEntries() {
     const entries = [
         {
             id: c++ + "",
-            title: "test"
+            title: "test",
+            components: [
+                {
+                    type: "text",
+                    data: ""
+                }
+            ]
         }
     ] //TODO delete
     dispatcher.dispatch({
