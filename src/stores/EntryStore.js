@@ -31,6 +31,7 @@ class EntryStore extends EventEmitter {
                 break;
             }
             case constants.CREATE_ENTRY: {
+                if(!action.entry.components) action.entry.components = [];
                 this.data.entries.push(action.entry);
                 this.emit("change")
                 break;

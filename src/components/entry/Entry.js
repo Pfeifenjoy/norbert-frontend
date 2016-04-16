@@ -4,6 +4,7 @@ import AddComponentDialog from "./AddComponentDialog";
 import { deleteEntry, updateEntry } from "../../actions/EntryActions";
 import EntryStore from "../../stores/EntryStore";
 import { createComponent } from "./Component";
+import moment from "moment";
 
 const Entry = React.createClass({
     getInitialState() {
@@ -23,7 +24,6 @@ const Entry = React.createClass({
             }
         });
         EntryStore.on("updateEntry", id => {
-            console.log(id);
             if(this.props.id === id) {
                 this.setState({
                     data: EntryStore.getEntry(this.props.id)
@@ -76,10 +76,11 @@ const Entry = React.createClass({
                             id={`add-component-${this.props.id}`}
                             bsStyle="primary"
                             title={<div className="fa-plus" />}
+                            onClick={this.addText}
                         >
-                            <MenuItem>Erinnerung</MenuItem>
-                            <MenuItem onClick={this.handleAddText}>Text</MenuItem>
-                            <MenuItem>Location</MenuItem>
+                            <MenuItem onClick={this.addNotification}>Erinnerung</MenuItem>
+                            <MenuItem onClick={this.addText}>Text</MenuItem>
+                            <MenuItem onClicj={this.addLocation}>Location</MenuItem>
                         </SplitButton>
                     </ButtonGroup>
                 </Modal.Footer>
@@ -113,7 +114,24 @@ const Entry = React.createClass({
         //TODO Ask if the entry should be deleted
         deleteEntry(this.props.id);
     },
-    handleAddText() {
+    addText() {
+        this.addComponent({ type: "text" });
+    },
+    addNotification() {
+        this.addComponent({
+            type: "notification",
+            data: moment().format("YYYY-MM-DD")
+        });
+    },
+    addLocation() {
+        this.addComponent({
+            type: "location"
+        });
+    },
+    addComponent(comp) {
+        if(!comp.data) comp.data = "";
+        this.state.data.components.push(comp);
+        updateEntry(this.state.data);
     },
 
     updateTitle(oEvent) {
