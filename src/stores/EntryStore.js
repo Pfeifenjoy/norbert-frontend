@@ -13,7 +13,14 @@ class EntryStore extends EventEmitter {
         return this.data.entries;
     }
     getEntry(id) {
-        return this.data.entries[id];
+        return this.data.entries.find(entry => {
+            return entry.id === id;
+        })
+    }
+    getEntryIndex(id) {
+        return this.data.entries.findIndex(entry => {
+            return entry.id === id;
+        })
     }
 
     handleActions(action) {
@@ -27,11 +34,11 @@ class EntryStore extends EventEmitter {
                 break;
             }
             case constants.UPDATE_ENTRY: {
-                this.data.entry[this.data.entries.indexOf(this.get(action.id))] = action.entry;
+                this.data.entry[this.getEntryIndex(action.id)] = action.entry;
                 break;
             }
             case constants.DELETE_ENTRY: {
-                this.data.entries.splice(this.data.entries.indexOf(this.get(action.id)));
+                this.data.entries.splice(this.getEntryIndex(action.id), 1);
                 break;
             }
         }

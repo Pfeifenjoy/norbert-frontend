@@ -1,11 +1,13 @@
 import dispatcher from "../dispatcher";
 import constants from "../constants";
 
+let c = 0; //TODO delete
+
 export function updateEntries() {
     //TODO request
     const entries = [
         {
-            id: "0",
+            id: c++ + "",
             title: "test"
         }
     ] //TODO delete
@@ -17,7 +19,7 @@ export function updateEntries() {
 
 export function createEntry(entry) {
     //TODO request
-    entry.id = new Date() + ""//TODO delete
+    entry.id = c++ + ""; ""//TODO delete
     dispatcher.dispatch({
         type: constants.CREATE_ENTRY,
         entry
@@ -35,6 +37,7 @@ export function updateEntry(entry) {
 
 export function deleteEntry(id) {
     //TODO request
+    console.log(id);
     dispatcher.dispatch({
         type: constants.DELETE_ENTRY,
         id
