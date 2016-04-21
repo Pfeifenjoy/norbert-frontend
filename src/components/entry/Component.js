@@ -5,11 +5,10 @@ import constants from "../../constants";
 //Abstract Class of every component.
 const Component = React.createClass({
     propTypes: {
-        data: React.PropTypes.node.isRequired,
+        data: React.PropTypes.node,
         onChange: React.PropTypes.func
     },
     handleChange(oEvent) {
-        this.setState({data: oEvent.target.value});
         this.props.onChange({
             data: oEvent.target.value,
             id: this.props.id
@@ -72,14 +71,35 @@ export class Task extends Component {
             >
                 <input 
                     type="checkbox"
+                    checked={this.props.finished}
+                    onChange={this.handleChecked.bind(this)}
                 />
             </span>
 
             <input
                 className="form-control"
                 type="text"
+                onChange={this.handleChange}
             />
         </div>
+    }
+    handleChecked(oEvent) {
+        this.props.onChange({
+            data: {
+                finished: !this.props.finished,
+                text: this.props.text
+            },
+            id: this.props.id
+        })
+    }
+    handleChange(oEvent) {
+        this.props.onChange({
+            data: {
+                finished: this.props.finished,
+                text: oEvent.target.value
+            },
+            id: this.props.id
+        })
     }
 }
 
@@ -111,8 +131,9 @@ export function createComponent(comp, onChange, id) {
         }
         case constants.TASK: {
             return <Task
-                        data={comp.data}
                         onChange={onChange}
+                        finished={comp.data.finished}
+                        value={comp.data.text}
                         id={id}
                         key={id}
                     />;

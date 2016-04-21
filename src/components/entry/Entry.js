@@ -85,7 +85,12 @@ const Entry = React.createClass({
     
     },
 
-    getComponents() {
+    getComponents(type) {
+        if(type) {
+            return this.state.data.components.filter(comp => {
+                return comp.type === type;
+            })
+        }
         return this.state.data.components || [];
     },
 
@@ -97,11 +102,22 @@ const Entry = React.createClass({
 
     render() {
 
-        const descriptions = this.getComponents().filter(comp => {
-            return comp.type === constants.DESCRIPTION;
-        })
+        const descriptions = this.getComponents(constants.DESCRIPTION)
         .map((comp, i) => {
             return <div className="description" key={i}>{comp.data}</div>;
+        })
+
+        const tasks = this.getComponents(constants.TASK)
+        .map((comp, i) => {
+            return <div className="task" key={i}>
+                <input 
+                    type="checkbox" 
+                    checked={comp.data.finished}
+                    onChange={this.handleTaskChange}
+                    data-id={i}
+                />
+                <span>{comp.data.text}</span>
+            </div>
         })
 
         const notificationSign = this.hasCompWithType(constants.NOTIFICATION) ? <span className="notificationSign fa-bell" /> : [];
@@ -116,6 +132,7 @@ const Entry = React.createClass({
                      onClick={this.handleEdit}></div>
                 <h3 className="title">{this.state.data.title}</h3>
                 {descriptions}
+                {tasks}
                 {signs}
                 {this.getEditModal()}
             </div>;
@@ -171,6 +188,12 @@ const Entry = React.createClass({
     handleCompChange(oComp) {
         this.state.data.components[oComp.id].data = oComp.data;
         this.setState({data: this.state.data});
+        updateEntry(this.state.data, this.props.id);
+    },
+
+    handleTaskChange(oEvent) {
+        let { id } = oEvent.target.dataset;
+        this.state.data.components[id].finished = !this.state.data.components[id].finished;
         updateEntry(this.state.data, this.props.id);
     }
 });
