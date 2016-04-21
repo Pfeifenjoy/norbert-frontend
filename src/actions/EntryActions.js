@@ -11,7 +11,7 @@ export function updateEntries() {
             title: "test",
             components: [
                 {
-                    type: "text",
+                    type: "DESCRIPTION",
                     data: ""
                 }
             ]

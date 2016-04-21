@@ -5,6 +5,7 @@ import { deleteEntry, updateEntry } from "../../actions/EntryActions";
 import EntryStore from "../../stores/EntryStore";
 import { createComponent } from "./Component";
 import moment from "moment";
+import constants from "../../constants";
 
 const Entry = React.createClass({
     getInitialState() {
@@ -41,17 +42,12 @@ const Entry = React.createClass({
             edit: false
         }
     },
-    render() {
-
-        const editComponents = this.state.data.components ? this.state.data.components.map((comp, i) => {
-            return createComponent(comp, true, this.handleCompChange, i);
-        }) : [];
+    getEditModal() {
         const components = this.state.data.components ? this.state.data.components.map((comp, i) => {
-            return createComponent(comp, false, null, i);
+            return createComponent(comp, this.handleCompChange, i);
         }) : [];
-
         //Dialog to edit the entry
-        const editModal = <Modal show={this.state.edit} onHide={this.handleEditClose}>
+        return <Modal show={this.state.edit} onHide={this.handleEditClose}>
                 <Modal.Header>
                     <Modal.Title>
                          <Input
@@ -63,7 +59,7 @@ const Entry = React.createClass({
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {editComponents}
+                    {components}
                 </Modal.Body>
                 <Modal.Footer>
                     <ButtonGroup>
@@ -76,15 +72,42 @@ const Entry = React.createClass({
                             id={`add-component-${this.props.id}`}
                             bsStyle="primary"
                             title={<div className="fa-plus" />}
-                            onClick={this.addText}
+                            onClick={this.addTask}
                         >
-                            <MenuItem onClick={this.addNotification}>Erinnerung</MenuItem>
+                            <MenuItem onClick={this.addTask}>Task</MenuItem>
                             <MenuItem onClick={this.addText}>Text</MenuItem>
+                            <MenuItem onClick={this.addNotification}>Erinnerung</MenuItem>
                             <MenuItem onClick={this.addDocument}>Document</MenuItem>
                         </SplitButton>
                     </ButtonGroup>
                 </Modal.Footer>
         </Modal>;
+    
+    },
+
+    getComponents() {
+        return this.state.data.components || [];
+    },
+
+    hasCompWithType(type){
+        return this.getComponents().find(comp => {
+            return comp.type === type;
+        }) ? true : false;
+    },
+
+    render() {
+
+        const descriptions = this.getComponents().filter(comp => {
+            return comp.type === constants.DESCRIPTION;
+        })
+        .map((comp, i) => {
+            return <div className="description" key={i}>{comp.data}</div>;
+        })
+
+        const notificationSign = this.hasCompWithType(constants.NOTIFICATION) ? <span className="notificationSign fa-bell" /> : [];
+        const documentSign = this.hasCompWithType(constants.DOCUMENT) ? <span className="documentSign fa-file" /> : [];
+        
+        const signs = <div className="signs">{notificationSign}{documentSign}</div>;
 
         return <div className="entry" 
                     onMouseOver={this.handleMouseOver}
@@ -92,8 +115,9 @@ const Entry = React.createClass({
                 <div className={"fa fa-pencil modifyButton " + (this.state.mouseOver ? "" : "hidden")} 
                      onClick={this.handleEdit}></div>
                 <h3 className="title">{this.state.data.title}</h3>
-                {components}
-                {editModal}
+                {descriptions}
+                {signs}
+                {this.getEditModal()}
             </div>;
     },
     handleMouseOver(oEvent) {
@@ -114,18 +138,23 @@ const Entry = React.createClass({
         //TODO Ask if the entry should be deleted
         deleteEntry(this.props.id);
     },
+    addTask() {
+        this.addComponent({
+            type: constants.TASK
+        });
+    },
     addText() {
-        this.addComponent({ type: "text" });
+        this.addComponent({ type: constants.DESCRIPTION });
     },
     addNotification() {
         this.addComponent({
-            type: "notification",
+            type: constants.NOTIFICATION,
             data: moment().format("YYYY-MM-DD")
         });
     },
     addDocument() {
         this.addComponent({
-            type: "document"
+            type: constants.DOCUMENT
         });
     },
     addComponent(comp) {

@@ -1,21 +1,11 @@
 import React from "react";
 import { Input, Button } from "react-bootstrap";
+import constants from "../../constants";
 
 //Abstract Class of every component.
 const Component = React.createClass({
-    getInitialState() {
-        return {
-            editable: this.props.editable
-        }
-    },
-    getDefaultProps() {
-        return {
-            editable: false
-        }
-    },
     propTypes: {
         data: React.PropTypes.node.isRequired,
-        editable: React.PropTypes.bool,
         onChange: React.PropTypes.func
     },
     handleChange(oEvent) {
@@ -33,96 +23,102 @@ const Component = React.createClass({
 
 export class Description extends Component {
     render() {
-        if(this.state.editable) {
-            let rows = this.props.data.split("\n").length;
-            rows = rows >= 5 ? rows : 5;
-            return <Input
-                type="textarea"
-                placeholder="Beschreibung..."
-                value={this.props.data}
-                onChange={this.handleChange}
-                rows={rows}
-                className="textarea"
-            />;
-        } else {
-            return <div className="description">{this.props.data}</div>;
-        }
+        let rows = this.props.data.split("\n").length;
+        rows = rows >= 5 ? rows : 5;
+        return <Input
+            type="textarea"
+            placeholder="Beschreibung..."
+            value={this.props.data}
+            onChange={this.handleChange}
+            rows={rows}
+            className="textarea description"
+        />;
     }
 };
 
 
 export class Notification extends Component {
     render() {
-        if(this.state.editable) {
-            return <div
-                        className="input-group"
-                    >
-                    <input
-                            onChange={this.handleChange}
-                            type="date"
-                            className="form-control"
-                            value={this.props.data}
-                        />
-                </div>
-        }
-        else {
-            return <div className="fa-bell"></div>;
-        }
+        return <div
+                className="input-group notification"
+            >
+            <span className="input-group-addon fa-bell" />
+            <input
+                onChange={this.handleChange}
+                type="date"
+                className="form-control"
+                value={this.props.data}
+            />
+        </div>;
     }
 }
 
 export class Document extends Component {
     render() {
-        if(this.state.editable) {
-            return <div className="input-group">
-                <input className="form-control" type="text" />
-                <span className="input-group-btn">
-                    <button className="fa-paperclip btn"></button>
-                </span>
-            </div>
-        }
-        else {
-            return <div className="fa-file"></div>;
-        }
+        return <div className="input-group">
+            <input className="form-control" type="text" />
+            <span className="input-group-btn">
+                <button className="fa-paperclip btn"></button>
+            </span>
+        </div>
     }
 }
 
-export function createComponent(comp, edit, onChange, id) {
+export class Task extends Component {
+    render() {
+        return <div className="input-group">
+            <span
+                className="input-group-addon"
+            >
+                <input 
+                    type="checkbox"
+                />
+            </span>
+
+            <input
+                className="form-control"
+                type="text"
+            />
+        </div>
+    }
+}
+
+export function createComponent(comp, onChange, id) {
     switch(comp.type) {
-        case "text": {
-            return <div className="description">
-                <Description
+        case constants.DESCRIPTION: {
+            return <Description
                         data={comp.data}
-                        editable={edit}
                         onChange={onChange}
                         id={id}
                         key={id}
-                    />
-                </div>;
+                    />;
         }
-        case "notification": {
-            return <div className="notification">
-                    <Notification
+        case constants.NOTIFICATION: {
+            return <Notification
                         data={comp.data}
-                        editable={edit}
                         onChange={onChange}
                         id={id}
                         key={id}
-                    />
-                </div>;
+                    />;
         }
-        case "document": {
-            return <div className="document">
-                    <Document
+        case constants.DOCUMENT: {
+            return <Document
                         data={comp.data}
-                        editable={edit}
                         onChange={onChange}
                         id={id}
                         key={id}
-                    />
-                </div>;
+                    />;
+        }
+        case constants.TASK: {
+            return <Task
+                        data={comp.data}
+                        onChange={onChange}
+                        id={id}
+                        key={id}
+                    />;
         }
         default: {
+            console.warn(`Unknow type of entry component: ${comp.type}`)
             return <div />
         }
     }
