@@ -1,5 +1,5 @@
 import React from "react";
-import { Input } from "react-bootstrap";
+import { Input, Button } from "react-bootstrap";
 
 //Abstract Class of every component.
 const Component = React.createClass({
@@ -54,14 +54,35 @@ export class Description extends Component {
 export class Notification extends Component {
     render() {
         if(this.state.editable) {
-            return <input
-                        onChange={this.handleChange}
-                        type="date"
-                        value={this.props.data}
-                    />
+            return <div
+                        className="input-group"
+                    >
+                    <input
+                            onChange={this.handleChange}
+                            type="date"
+                            className="form-control"
+                            value={this.props.data}
+                        />
+                </div>
         }
         else {
-            return <div></div>;
+            return <div className="fa-bell"></div>;
+        }
+    }
+}
+
+export class Document extends Component {
+    render() {
+        if(this.state.editable) {
+            return <div className="input-group">
+                <input className="form-control" type="text" />
+                <span className="input-group-btn">
+                    <button className="fa-paperclip btn"></button>
+                </span>
+            </div>
+        }
+        else {
+            return <div className="fa-file"></div>;
         }
     }
 }
@@ -69,22 +90,37 @@ export class Notification extends Component {
 export function createComponent(comp, edit, onChange, id) {
     switch(comp.type) {
         case "text": {
-            return <Description
-                        data={comp.data}
-                        editable={edit}
-                        onChange={onChange}
-                        id={id}
-                        key={id}
-                    />;
-        }
-        case "notification": {
-            return <Notification
+            return <div className="description">
+                <Description
                         data={comp.data}
                         editable={edit}
                         onChange={onChange}
                         id={id}
                         key={id}
                     />
+                </div>;
+        }
+        case "notification": {
+            return <div className="notification">
+                    <Notification
+                        data={comp.data}
+                        editable={edit}
+                        onChange={onChange}
+                        id={id}
+                        key={id}
+                    />
+                </div>;
+        }
+        case "document": {
+            return <div className="document">
+                    <Document
+                        data={comp.data}
+                        editable={edit}
+                        onChange={onChange}
+                        id={id}
+                        key={id}
+                    />
+                </div>;
         }
         default: {
             return <div />

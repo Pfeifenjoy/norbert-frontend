@@ -80,7 +80,7 @@ const Entry = React.createClass({
                         >
                             <MenuItem onClick={this.addNotification}>Erinnerung</MenuItem>
                             <MenuItem onClick={this.addText}>Text</MenuItem>
-                            <MenuItem onClicj={this.addLocation}>Location</MenuItem>
+                            <MenuItem onClick={this.addDocument}>Document</MenuItem>
                         </SplitButton>
                     </ButtonGroup>
                 </Modal.Footer>
@@ -123,9 +123,9 @@ const Entry = React.createClass({
             data: moment().format("YYYY-MM-DD")
         });
     },
-    addLocation() {
+    addDocument() {
         this.addComponent({
-            type: "location"
+            type: "document"
         });
     },
     addComponent(comp) {
