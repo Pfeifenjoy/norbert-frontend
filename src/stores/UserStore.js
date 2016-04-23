@@ -15,10 +15,14 @@ class UserStore extends EventEmitter {
         return this.data;
     }
     get authenticated() {
-        return true; //TODO this.data.username === "" ? false : true;
+        return this.data.username === "" ? false : true;
     }
     get username() {
         return this.data.username;
+    }
+    set username(name) {
+        sessionStorage.setItem("username", name);
+        this.data.username = name;
     }
     get authenticationFailed() {
         return this.data.authenticationFailed;
@@ -28,8 +32,7 @@ class UserStore extends EventEmitter {
         switch (action.type) {
             case constants.AUTHENTICATED:
             {
-                this.data.username = action.username;
-                sessionStorage.setItem("username", action.username);
+                this.username = action.username;
                 this.data.authenticationFailed = false;
                 this.emit("change");
                 break;

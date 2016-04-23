@@ -2,7 +2,9 @@ import React, {Component} from "react";
 import Entry from "./entry/Entry.js";
 import EntryStore from "../stores/EntryStore";
 import { Button, Grid, Col, Row } from "react-bootstrap";
-import { updateEntries, createEntry } from "../actions/EntryActions";
+import { updateEntries, createEntry, loadNewImages } from "../actions/EntryActions";
+import DetailEntry from "./entry/DetailEntry";
+
 
 const smEntry = 6;
 const mdEntry = 6;
@@ -11,9 +13,8 @@ const lgEntry = 4;
 export default class Newsfeed extends Component {
     constructor() {
         super();
-        updateEntries();
         this.state = {
-            entries: EntryStore.entries,
+            entries: EntryStore.entries
         }
     }
 
@@ -23,13 +24,21 @@ export default class Newsfeed extends Component {
                 entries: EntryStore.entries
             });
         });
+        updateEntries();
+        window.addEventListener('scroll', this.handleScroll);
     }
+
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+    }
+
     render() {
         const entries = this.state.entries.map((entry, i) => {
             return <Col key={entry.id} lg={lgEntry} md={mdEntry} sm={smEntry}>
                 <Entry id={entry.id} />
             </Col>;
         });
+
 
         return <Grid className="newsfeed">
             <Row className="entries">
@@ -45,6 +54,7 @@ export default class Newsfeed extends Component {
                     />
                 </Col>
             </Row>
+            <DetailEntry />
         </Grid>;
     }
 
@@ -54,7 +64,12 @@ export default class Newsfeed extends Component {
         })
     }
 
-    handleEntryCreated() {
-         
+    handleScroll(event) {
+        let {scrollTop, scrollHeight, clientHeight} = event.srcElement.body;
+        if(scrollTop === 0)
+            return loadNewImages(false);
+        let distBottum = (scrollTop + clientHeight - scrollHeight) * -1;
+        if(distBottum === 0) 
+            loadNewImages(true);
     }
 }

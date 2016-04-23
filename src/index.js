@@ -13,8 +13,14 @@ import Register from "./pages/Register";
 import Main from "./pages/Main";
 
 import {requireAuth} from "./util/auth";
+import UserStore from "./stores/UserStore";
 
 const app = document.getElementById("content");
+
+UserStore.on("change", () => {
+    if(!UserStore.authenticated)
+        browserHistory.push("/login")
+});
 
 ReactDom.render(
     <Router history={browserHistory}>

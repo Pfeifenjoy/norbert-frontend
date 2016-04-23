@@ -6,12 +6,18 @@ class EntryStore extends EventEmitter {
     constructor() {
         super();
         this.data = {
-            entries: []
+            entries: [],
+            editEntry: null
         }
     }
     get entries() {
         return this.data.entries;
     }
+
+    get editEntry() {
+        return this.data.editEntry;
+    }
+
     getEntry(id) {
         return this.data.entries.find(entry => {
             return entry.id === id;
@@ -44,6 +50,16 @@ class EntryStore extends EventEmitter {
             case constants.DELETE_ENTRY: {
                 this.data.entries.splice(this.getEntryIndex(action.id), 1);
                 this.emit("change");
+                break;
+            }
+            case constants.START_EDIT_ENTRY: {
+                this.data.editEntry = this.getEntry(action.id);
+                this.emit("editEntryChanged", this.data.editEntry);
+                break;
+            }
+            case constants.STOP_EDIT_ENTRY: {
+                this.data.editEntry = null;
+                this.emit("editEntryChanged", null);
                 break;
             }
         }

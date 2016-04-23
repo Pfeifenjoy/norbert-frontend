@@ -1,7 +1,6 @@
 import React, {Component} from "react";
-import $ from "jquery";
-import {hashHistory, IndexLink} from "react-router";
-import url from "url";
+import {IndexLink} from "react-router";
+import { register } from "../actions/UserActions";
 
 export default class Register extends Component {
     constructor(props) {
@@ -87,15 +86,11 @@ export default class Register extends Component {
             return;
         }
 
-        $.ajax({
-            url: url.resolve(this.props.target, "register"),
-            method: "POST",
-            data: { username, password },
-            crossDomain: true
-        }).done(oData => {
-            hashHistory.push("/");
-        });
-        this.setState({username: "", password: "", repassword: "", submitFailed: false});
+        register()
+        .catch(() => {
+            this.setState({submitFailed: true});
+        })
+
     }
 
 }

@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import RegisterForm from "../components/RegisterForm";
 import ConfigStore from "../stores/ConfigStore";
 import BaseUrlInput from "../components/BaseUrlInput";
 import { Link } from "react-router";
+import { register } from "../actions/UserActions";
 let logo = require("../img/logo.png");
 
 export default class Register extends Component {
@@ -105,14 +105,9 @@ export default class Register extends Component {
             return;
         }
 
-        $.ajax({
-            url: url.resolve(this.props.target, "register"),
-            method: "POST",
-            data: { username, password },
-            crossDomain: true
-        }).done(oData => {
-            hashHistory.push("/");
-        });
-        this.setState({username: "", password: "", repassword: "", submitFailed: false});
+        register(username, password)
+        .fail(() => {
+            this.setState({submitFailed: true});
+        })
     }
 }

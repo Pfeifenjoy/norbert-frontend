@@ -10,6 +10,7 @@
 }
 
 .entry .title {
+    margin: 0;
     text-align: left;
     color: @midnight-blue;
 }
@@ -44,8 +45,7 @@
     resize: vertical;
 }
 
-.entry .description {
-    max-width: 100%;
+.entry .breakWord {
     text-overflow: ellipsis;
     word-wrap: break-word;
 }
@@ -55,6 +55,10 @@
     position: absolute;
     right: 0.5em;
     bottom: 0.5em;
+}
+
+.lineThrough {
+    text-decoration: line-through;
 }
 
 .entry .task span {

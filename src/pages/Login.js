@@ -6,34 +6,48 @@ import { login } from "../actions/UserActions";
 import UserStore from "../stores/UserStore";
 let logo = require("../img/logo.png");
 
-export default class Login extends Component {
+const Login = React.createClass({
 
-    constructor(props) {
-        super(props);
-        this.state = {
+    getInitialState() {
+        return {
             config: ConfigStore.getAll(),
             submitFailed: UserStore.authenticationFailed,
             loading: false,
             username: "",
             password: ""
         }
-    }
+    },
+
+    contextTypes: {
+        router: React.PropTypes.object.isRequired
+    },
     componentWillMount() {
         ConfigStore.on("change", () => {
             this.setState({ config: ConfigStore.getAll() });
         });
         UserStore.on("change", () => {
             this.setState({
-                submitFailed: UserStore.authenticationFailed
+                submitFailed: UserStore.authenticationFailed,
+                loading: false,
             })
+            if(UserStore.authenticated) {
+                const { location } = this.props;
+                if(location.state && location.state.nextPathname) {
+                    this.context.router.replace(location.state.nextPathname)
+                }
+                else {
+                    console.log(this.context);
+                    this.context.router.replace("/");
+                }
+            }
         })
-    }
+    },
     render() {
         const usernameState = "form-group" + (this.state.submitFailed && this.state.username.trim() === "" ? " has-error" : "");
         const username = <div className={usernameState}>
             <input className="form-control" placeholder="Username"
                value={this.state.username}
-               onChange={this.handleUsernameChange.bind(this)} name="username"
+               onChange={this.handleUsernameChange} name="username"
                disabled={this.state.loading}
                type="text"/>
            </div>;
@@ -41,7 +55,7 @@ export default class Login extends Component {
         const password = <div className={passwordState}>
             <input className="form-control" placeholder="Password"
                value={this.state.password}
-               onChange={this.handlePasswordChange.bind(this)} name="password"
+               onChange={this.handlePasswordChange} name="password"
                type="password"
                disabled={this.state.loading}
                />
@@ -55,7 +69,7 @@ export default class Login extends Component {
             <div className="panel-body">
                 {loginFailed}
                 <form acceptCharset="UTF-8" role="form" action="index.html#/app" method="post"
-                      onSubmit={this.handleSubmit.bind(this)}>
+                      onSubmit={this.handleSubmit}>
                     <fieldset>
                         {username}
                         {password}
@@ -82,19 +96,19 @@ export default class Login extends Component {
                 </div>
             </section>
         </div>
-    }
+    },
 
     handleUsernameChange(oEvent) {
         this.setState({
             username: oEvent.target.value
         });
-    }
+    },
 
     handlePasswordChange(oEvent) {
         this.setState({
             password: oEvent.target.value
         });
-    }
+    },
 
     handleSubmit(oEvent) {
         oEvent.preventDefault();
@@ -106,4 +120,6 @@ export default class Login extends Component {
         }
         login(username, password);
     }
-}
+})
+
+export default Login;
