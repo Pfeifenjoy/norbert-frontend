@@ -15,19 +15,26 @@ const Entry = React.createClass({
     },
 
     componentWillMount() {
-        EntryStore.on("change", () => {
+        this.handleEntryStoreChange = () => {
             let data = EntryStore.getEntry(this.props.id);
             if(data) {
                 this.setState({data});
             }
-        });
-        EntryStore.on("updateEntry", id => {
+        }
+        EntryStore.on("change", this.handleEntryStoreChange);
+        this.handleEntryUpdate = id => {
             if(this.props.id === id) {
                 this.setState({
                     data: EntryStore.getEntry(this.props.id)
                 })
             }
-        });
+        }
+        EntryStore.on("updateEntry", this.handleEntryUpdate);
+    },
+
+    componentWillUnmount() {
+        EntryStore.removeListener("change", this.handleEntryStoreChange);
+        EntryStore.removeListener("updateEntry", this.handleEntryUpdate);
     },
 
 

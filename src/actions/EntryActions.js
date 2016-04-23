@@ -42,8 +42,12 @@ export function createEntry(entry) {
     //TODO implement message system and add entries could not be loaded method
 }
 
+let lastXhr;
 export function updateEntry(entry) {
-    $.ajax({
+    //kill all previous request, so that always the last
+    //will be saved
+    if(lastXhr) lastXhr.abort();
+    lastXhr = $.ajax({
         url: ConfigStore.apiLocation + "entries/" + entry.id,
         method: "PUT",
         data: entry
@@ -56,6 +60,7 @@ export function updateEntry(entry) {
             entry, id
         });
     })
+    return lastXhr;
     //TODO implement message system and add entries could not be loaded method
 }
 

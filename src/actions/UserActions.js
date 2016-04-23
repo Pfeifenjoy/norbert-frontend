@@ -26,8 +26,8 @@ export function login(username, password) {
 
 export function logout() {
     return $.ajax({
-        url: ConfigStore.apiLocation + "/logout",
-        method: "GET"
+        url: ConfigStore.apiLocation + "users/logout",
+        method: "POST"
     }).done(() => {
         dispatcher.dispatch({
             type: constants.UNAUTHENTICATED
@@ -46,7 +46,6 @@ export function register(username, password) {
     }).done(() => {
         return login(username, password);
     }).fail(e => {
-        console.log(e);
         dispatcher.dispatch({
             type: constants.NEW_USER_FAILED,
             username

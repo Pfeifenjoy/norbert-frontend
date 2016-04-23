@@ -22,10 +22,11 @@ const Login = React.createClass({
         router: React.PropTypes.object.isRequired
     },
     componentWillMount() {
-        ConfigStore.on("change", () => {
+        this.handleConfigUpdate = () => {
             this.setState({ config: ConfigStore.getAll() });
-        });
-        UserStore.on("change", () => {
+        };
+        ConfigStore.on("change", this.handleConfigUpdate);
+        this.handleUserUpdate = () => {
             this.setState({
                 submitFailed: UserStore.authenticationFailed,
                 loading: false,
@@ -36,11 +37,15 @@ const Login = React.createClass({
                     this.context.router.replace(location.state.nextPathname)
                 }
                 else {
-                    console.log(this.context);
                     this.context.router.replace("/");
                 }
             }
-        })
+        };
+        UserStore.on("change", this.handleUserUpdate);
+    },
+    componentWillUnmount() {
+        ConfigStore.removeListener("change", this.handleConfigUpdate);
+        UserStore.removeListener("change", this.handleUserUpdate);
     },
     render() {
         const usernameState = "form-group" + (this.state.submitFailed && this.state.username.trim() === "" ? " has-error" : "");

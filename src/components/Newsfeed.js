@@ -19,17 +19,19 @@ export default class Newsfeed extends Component {
     }
 
     componentWillMount() {
-        EntryStore.on("change", () => {
+        this.handleEntryUpdate = () => {
             this.setState({
                 entries: EntryStore.entries
             });
-        });
+        };
+        EntryStore.on("change", this.handleEntryUpdate);
         updateEntries();
-        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener("scroll", this.handleScroll);
     }
 
     componentWillUnmount() {
         window.removeEventListener("scroll", this.handleScroll);
+        EntryStore.removeListener("change", this.handleEntryUpdate);
     }
 
     render() {
