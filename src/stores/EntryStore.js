@@ -67,6 +67,7 @@ class EntryStore extends EventEmitter {
 }
 
 const entryStore = new EntryStore;
+entryStore.setMaxListeners(1000);
 dispatcher.register(entryStore.handleActions.bind(entryStore));
 
 export default entryStore;

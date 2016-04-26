@@ -82,7 +82,7 @@ export default class DetailEntry extends Component {
     addNotification() {
         this.addComponent({
             type: constants.NOTIFICATION,
-            data: undefined
+            data: {}
         });
     }
     addDocument() {
@@ -144,12 +144,12 @@ function createNotification(component, change) {
             onChange={onChange}
             type="date"
             className="form-control"
-            value={component.date}
+            value={component.data.date}
         />
     </div>;
 
     function onChange(oEvent) {
-        component.date = oEvent.target.value;
+        component.data.date = oEvent.target.value;
         change(component);
     }
 }

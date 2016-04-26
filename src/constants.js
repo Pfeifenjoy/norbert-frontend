@@ -14,9 +14,13 @@ const constants = {
     STOP_EDIT_ENTRY: "STOP_EDIT_ENTRY",
 
     //Entry types
-    DESCRIPTION: "DESCRIPTION",
-    TASK: "TASK",
-    NOTIFICATION: "NOTIFICATION",
-    DOCUMENT: "DOCUMENT"
+    DESCRIPTION: "components-description",
+    TASK: "components-task",
+    NOTIFICATION: "components-notification",
+    DOCUMENT: "components-document",
+
+    //Recommendations
+    NEW_RECOMMENDATIONS: "NEW_RECOMMENDATIONS",
+    DELETE_RECOMMENDATION: "DELETE_RECOMMENDATION"
 };
 export default constants;

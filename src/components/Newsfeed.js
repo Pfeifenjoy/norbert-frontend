@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import Entry from "./entry/Entry.js";
 import EntryStore from "../stores/EntryStore";
-import { Button, Grid, Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { updateEntries, createEntry, loadNewImages } from "../actions/EntryActions";
 import DetailEntry from "./entry/DetailEntry";
 
@@ -42,22 +42,22 @@ export default class Newsfeed extends Component {
         });
 
 
-        return <Grid className="newsfeed">
+        return <div className="newsfeed">
             <Row className="entries">
                 {entries}
             </Row>
             
             <Row>
-                <Col lg={12} className="footer">
+                <Col xs={12} className="footer">
                     <Button
-                        className="fa fa-plus"
+                        className="fa-plus addButton"
                         bsStyle="primary"
                         onClick={this.handleAddEntry.bind(this)}
                     />
                 </Col>
             </Row>
             <DetailEntry />
-        </Grid>;
+        </div>;
     }
 
     handleAddEntry() {

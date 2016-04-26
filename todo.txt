@@ -1,0 +1,2 @@
+- notifikationen holen und chrome notification api einlesen.
+- recommendations anzeigen
