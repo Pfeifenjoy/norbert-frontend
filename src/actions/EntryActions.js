@@ -25,7 +25,6 @@ export function createEntry(entry) {
         data: entry
     })
     .done(entry => {
-        console.log(entry);
         dispatcher.dispatch({
             type: constants.CREATE_ENTRY,
             entry
@@ -39,7 +38,6 @@ export function updateEntry(entry) {
     //kill all previous request, so that always the last
     //will be saved
     if(lastXhr) lastXhr.abort();
-    console.log(entry);
     lastXhr = $.ajax({
         url: ConfigStore.apiLocation + "entries/" + entry.id,
         method: "PUT",

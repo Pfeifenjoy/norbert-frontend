@@ -42,9 +42,11 @@ export default class Recommendation extends Component {
     }
 
     handleAcceptRecommendation() {
+        RecommendationStore.removeListener("change", this.handleUpdateRecommendation);
         acceptRecommendation(this.state.recommendation);
     }
     handleRejectRecommendation() {
+        RecommendationStore.removeListener("change", this.handleUpdateRecommendation);
         rejectRecommendation(this.state.recommendation);
     }
 }

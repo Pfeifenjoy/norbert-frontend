@@ -55,9 +55,10 @@ const Entry = React.createClass({
 
     render() {
 
+
         const descriptions = this.getComponents(constants.DESCRIPTION)
         .map((comp, i) => {
-            return <div className="breakWord" key={i}>{comp.data}</div>;
+            return <div className="breakWord" key={i}>{comp.data.text}</div>;
         })
 
         const tasks = this.getComponents(constants.TASK)
@@ -77,17 +78,17 @@ const Entry = React.createClass({
         
         const signs = <div className="signs">{notificationSign}{documentSign}</div>;
 
-        const edit = <div
+        const edit = this.state.data.type === constants.ENTRY ? <div
             className={"fa fa-pencil modifyButton " + (this.state.mouseOver ? "" : "hidden")} 
             onClick={startEdit.bind({}, this.props.id)}>
-        </div>;
+        </div> : [];
 
         const className = (this.state.data.type === constants.ENTRY ? "entry" : "information")
                             + " newsfeedObject";
         return <div className={className}
                     onMouseOver={this.handleMouseOver}
                     onMouseOut={this.handleMouseOut}>
-                    {() => {if(this.state.data.type === constants.ENTRY) return edit}}
+                {edit}
                 <h3 className="title">{this.state.data.title}</h3>
                 {descriptions}
                 {tasks}

@@ -25,9 +25,12 @@ export function updateRecommendations() {
     }, 0);
 }
 
-export function acceptRecommendation(id) {
-    return createEntry(RecommendationStore.getRecommendation(id))
-    .then(() => {
+export function acceptRecommendation(recommendation) {
+    delete recommendation.id;
+    return createEntry(recommendation)
+    .then(entry => {
+        let { id } = entry;
+        console.log(id);
         dispatcher.dispatch({
             type: constants.DELETE_RECOMMENDATION,
             id

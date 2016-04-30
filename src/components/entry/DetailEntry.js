@@ -152,18 +152,18 @@ export default class DetailEntry extends Component {
 
 
 function createDescription(component, change) {
-    let rows = component.data.split("\n").length;
+    let rows = component.data.text.split("\n").length;
     rows = rows >= 5 ? rows : 5;
     return <Input
         type="textarea"
         placeholder="Beschreibung..."
-        value={component.data}
+        value={component.data.text}
         onChange={onChange}
         rows={rows}
         className="textarea description"
     />;
     function onChange(oEvent) {
-        component.data = oEvent.target.value;
+        component.data.text = oEvent.target.value;
         change(component)
     }
 };
