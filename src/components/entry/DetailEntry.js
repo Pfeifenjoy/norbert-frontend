@@ -96,12 +96,16 @@ export default class DetailEntry extends Component {
         });
     }
     addText() {
-        this.addComponent({ type: constants.DESCRIPTION });
+        this.addComponent({
+            type: constants.DESCRIPTION,
+            data: {
+                text: ""
+            }
+        });
     }
     addNotification() {
         this.addComponent({
-            type: constants.NOTIFICATION,
-            data: {}
+            type: constants.NOTIFICATION
         });
     }
     addDocument() {
@@ -110,7 +114,7 @@ export default class DetailEntry extends Component {
         });
     }
     addComponent(comp) {
-        if(!comp.data) comp.data = "";
+        if(!comp.data) comp.data = {};
         this.state.data.components.push(comp);
         this.setState({
             data: this.state.data

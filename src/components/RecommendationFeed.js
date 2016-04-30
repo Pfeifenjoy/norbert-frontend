@@ -27,10 +27,12 @@ export default class RecommendationFeed extends Component {
 
     render() {
         const recommendations = this.state.recommendations.map(recommendation => {
-            return <Recommendation
-                        key={recommendation.id}
+            console.log(recommendation);
+            return <div key={recommendation.id}>
+                <Recommendation
                         id={recommendation.id}
-                    />;
+                    />
+                </div>;
         });
         return <div className="recommendationsFeed">
             {recommendations}

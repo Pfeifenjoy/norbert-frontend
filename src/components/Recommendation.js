@@ -10,19 +10,6 @@ export default class Recommendation extends Component {
         }
     }
 
-    componentWillMount() {
-        this.handleUpdateRecommendation = () => {
-            this.setState({
-                recommendation: RecommendationStore.getRecommendation(this.props.id)
-            });
-        }
-        RecommendationStore.on("change", this.handleUpdateRecommendation);
-    }
-
-    componentWillUnmount() {
-        RecommendationStore.removeListener("change", this.handleUpdateRecommendation);
-    }
-
     render() {
         const { recommendation } = this.state;
         return <div className="recommendation col-lg-6 col-md-12">
@@ -42,11 +29,9 @@ export default class Recommendation extends Component {
     }
 
     handleAcceptRecommendation() {
-        RecommendationStore.removeListener("change", this.handleUpdateRecommendation);
         acceptRecommendation(this.state.recommendation);
     }
     handleRejectRecommendation() {
-        RecommendationStore.removeListener("change", this.handleUpdateRecommendation);
         rejectRecommendation(this.state.recommendation);
     }
 }
