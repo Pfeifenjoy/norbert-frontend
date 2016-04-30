@@ -77,11 +77,17 @@ const Entry = React.createClass({
         
         const signs = <div className="signs">{notificationSign}{documentSign}</div>;
 
-        return <div className="entry" 
+        const edit = <div
+            className={"fa fa-pencil modifyButton " + (this.state.mouseOver ? "" : "hidden")} 
+            onClick={startEdit.bind({}, this.props.id)}>
+        </div>;
+
+        const className = (this.state.data.type === constants.ENTRY ? "entry" : "information")
+                            + " newsfeedObject";
+        return <div className={className}
                     onMouseOver={this.handleMouseOver}
                     onMouseOut={this.handleMouseOut}>
-                <div className={"fa fa-pencil modifyButton " + (this.state.mouseOver ? "" : "hidden")} 
-                     onClick={startEdit.bind({}, this.props.id)}></div>
+                    {() => {if(this.state.data.type === constants.ENTRY) return edit}}
                 <h3 className="title">{this.state.data.title}</h3>
                 {descriptions}
                 {tasks}

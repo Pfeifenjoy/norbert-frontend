@@ -135,6 +135,7 @@ export default class DetailEntry extends Component {
         let rawHashtags = oEvent.target.value;
         let { data } = this.state;
         data.tags = rawHashtags.split(/#| /).filter(tag => { return tag.length > 0 });
+        if(/#$/.test(rawHashtags)) data.tags.push("");
         this.setState({data})
         updateEntry(this.state.data);
     }

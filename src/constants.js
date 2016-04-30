@@ -21,6 +21,10 @@ const constants = {
 
     //Recommendations
     NEW_RECOMMENDATIONS: "NEW_RECOMMENDATIONS",
-    DELETE_RECOMMENDATION: "DELETE_RECOMMENDATION"
+    DELETE_RECOMMENDATION: "DELETE_RECOMMENDATION",
+
+    //NewsfeedObject types
+    ENTRY: "ENTRY",
+    INFORMATION: "INFORMATION"
 };
 export default constants;
