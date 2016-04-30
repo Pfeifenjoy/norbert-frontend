@@ -1,7 +1,8 @@
 @import "colors.less";
 
 @modifyButtonColor: yellow;
-.entry {
+
+.newsfeedObject {
     diplay: block;
     background-color: @emerald;
     padding: 1em;
@@ -9,13 +10,13 @@
     position: relative;
 }
 
-.entry .title {
+.newsfeedObject .title {
     margin: 0;
     text-align: left;
     color: @midnight-blue;
 }
 
-.entry .hidden {
+.newsfeedObject .hidden {
     visible: false;
 }
 
@@ -45,12 +46,12 @@
     resize: vertical;
 }
 
-.entry .breakWord {
+.newsfeedObject .breakWord {
     text-overflow: ellipsis;
     word-wrap: break-word;
 }
 
-.entry .signs {
+.newsfeedObject .signs {
     display: block;
     position: absolute;
     right: 0.5em;
@@ -61,7 +62,7 @@
     text-decoration: line-through;
 }
 
-.entry .task span {
+.newsfeedObject .task span {
     margin-left: 0.5em;
 }
 
