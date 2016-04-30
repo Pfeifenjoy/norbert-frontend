@@ -3,19 +3,11 @@ import constants from "../constants";
 import $ from "jquery";
 import ConfigStore from "../stores/ConfigStore";
 
-function modifyId(entry) {
-    entry.id = entry._id;
-    delete entry._id;
-    return entry;
-}
 
 export function updateEntries() {
     return $.ajax({
         url: ConfigStore.apiLocation + "newsfeed/",
         method: "GET"
-    })
-    .done(entries => {
-        return entries.map(modifyId)
     })
     .done(entries => {
         dispatcher.dispatch({
@@ -53,7 +45,6 @@ export function updateEntry(entry) {
         method: "PUT",
         data: entry
     })
-    .done(modifyId)
     .done(entry => {
         let { id } = entry;
         dispatcher.dispatch({

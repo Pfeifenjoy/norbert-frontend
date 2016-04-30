@@ -6,6 +6,7 @@ import { createEntry } from "./EntryActions";
 import RecommendationStore from "../stores/RecommendationStore";
 
 export function updateRecommendations() {
+    //TODO request
     let recommendations = [
         {
             "title": "Test Recommendation",
@@ -16,10 +17,12 @@ export function updateRecommendations() {
         }
     ];
 
+    setTimeout(() => {
     dispatcher.dispatch({
         type: constants.NEW_RECOMMENDATIONS,
         recommendations
     });
+    }, 0);
 }
 
 export function acceptRecommendation(id) {

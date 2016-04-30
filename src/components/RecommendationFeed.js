@@ -13,7 +13,6 @@ export default class RecommendationFeed extends Component {
 
     componentWillMount() {
         this.handleNewRecommendations = () => {
-            console.log("sdlkfj");
             this.setState({
                 recommendations: RecommendationStore.recommendations
             });
