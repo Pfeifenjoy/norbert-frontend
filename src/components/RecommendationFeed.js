@@ -23,7 +23,7 @@ export default class RecommendationFeed extends Component {
     }
 
     componentWillUnmount() {
-        RecommendationStore.removeEventListener("change", this.handleNewRecommendations);
+        RecommendationStore.removeListener("change", this.handleNewRecommendations);
     }
 
     render() {

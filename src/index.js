@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Layout from "./pages/Layout";
 import Register from "./pages/Register";
 import Main from "./pages/Main";
+import Settings from "./pages/Settings";
 
 import {requireAuth} from "./util/auth";
 import UserStore from "./stores/UserStore";
@@ -26,6 +27,7 @@ ReactDom.render(
     <Router history={browserHistory}>
         <Route path="/" component={Layout} onEnter={requireAuth}>
             <IndexRoute component={Main}></IndexRoute>
+			<Route path="/settings" component={Settings} />
         </Route>
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />

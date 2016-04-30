@@ -45,13 +45,13 @@ export default class DetailEntry extends Component {
                     <ButtonGroup>
                         <Button
                             bsStyle="danger"
-                            className="fa-trash"
+                            
                             onClick={this.handleDelete.bind(this)}
-                        ></Button>
+                        ><div className="fa fa-trash fa-fw"/></Button>
                         <SplitButton
                             id={`add-component-${this.props.id}`}
                             bsStyle="primary"
-                            title={<div className="fa-plus" />}
+                            title={<div className="fa fa-plus fa-fw " />}
                             onClick={this.addTask.bind(this)}
                         >
                             <MenuItem onClick={this.addTask.bind(this)}>Aufgabe</MenuItem>
@@ -139,7 +139,7 @@ function createNotification(component, change) {
     return <div
             className="input-group notification"
         >
-        <span className="input-group-addon fa-bell" />
+        <span className="input-group-addon fa fa-bell" />
         <input
             onChange={onChange}
             type="date"
@@ -158,7 +158,7 @@ function createDocument(component, change) {
     return <div className="input-group">
         <input className="form-control" type="file" />
         <span className="input-group-btn">
-            <button className="fa-paperclip btn"></button>
+            <button className="fa fa-paperclip btn"></button>
         </span>
     </div>;
 }

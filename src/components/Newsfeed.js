@@ -50,7 +50,7 @@ export default class Newsfeed extends Component {
             <Row>
                 <Col xs={12} className="footer">
                     <Button
-                        className="fa-plus addButton"
+                        className="fa fa-plus addButton"
                         bsStyle="primary"
                         onClick={this.handleAddEntry.bind(this)}
                     />

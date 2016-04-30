@@ -31,11 +31,11 @@ export default class Recommendation extends Component {
             <div className="actions">
                 <span
                     onClick={this.handleRejectRecommendation.bind(this)}
-                    className="trigger reject fa-times"
+                    className="trigger reject fa fa-times"
                 />
                 <span
                     onClick={this.handleAcceptRecommendation.bind(this)}
-                    className="trigger accept fa-check"
+                    className="trigger accept fa fa-check"
                 />
             </div>
         </div>;

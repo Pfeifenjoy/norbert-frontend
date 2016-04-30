@@ -72,8 +72,8 @@ const Entry = React.createClass({
             </div>
         })
 
-        const notificationSign = this.hasCompWithType(constants.NOTIFICATION) ? <span className="notificationSign fa-bell" /> : [];
-        const documentSign = this.hasCompWithType(constants.DOCUMENT) ? <span className="documentSign fa-file" /> : [];
+        const notificationSign = this.hasCompWithType(constants.NOTIFICATION) ? <span className="notificationSign fa fa-bell" /> : [];
+        const documentSign = this.hasCompWithType(constants.DOCUMENT) ? <span className="documentSign fa fa-file" /> : [];
         
         const signs = <div className="signs">{notificationSign}{documentSign}</div>;
 

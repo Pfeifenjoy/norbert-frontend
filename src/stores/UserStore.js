@@ -48,7 +48,10 @@ class UserStore extends EventEmitter {
                 this.data.authenticationFailed = true;
                 this.emit("change");
                 break;
+			
             }
+			
+			//case constants.CHANGEPASSWORD:
         }
     }
 }

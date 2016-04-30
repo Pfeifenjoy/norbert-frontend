@@ -6,8 +6,8 @@ import RecommendationFeed from "../components/RecommendationFeed";
 export default class Login extends Component {
 
     render() {
-        return <div>
-            <section className="wrapper">
+        return <div className="main_bg">
+            <section className="wrapper ">
                 <div className="fluid-container">
                     <div className="col-lg-8 col-md-8 col-xs-6">
                         <Newsfeed />

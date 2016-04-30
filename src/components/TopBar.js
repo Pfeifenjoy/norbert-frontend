@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 export default class TopBar extends Component {
     render() {
-        return <nav className="topBar navbar navbar-fixed-top navbar-default" >
+        return <nav className="topBar navbar navbarcolor navbar-fixed-top navbar-default" >
                 <div className="container-fluid">
                     <div className="navbar-header">
                         <button
@@ -19,20 +19,23 @@ export default class TopBar extends Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand">Norbert</a>
+                        <Link to="/" className="navbar-brand" ><p className="fa fa-home fa-fw"/>Norbert</Link>
                     </div>
                     <div className="collapse navbar-collapse" id="navbar-body">
 
                         <form className="navbar-form navbar-left" role="search">
-                            <div className="container">
-                                <div className="form-group col-lg-6 col-lg-offset-3">
+                            
+                                <div className="form-group">
                                     <input type="text" className="form-control search" placeholder="Suche" />
                                 </div>
-                            </div>
+                            
                         </form>
                         <ul className="nav navbar-nav navbar-right">
+							<li>
+                                <Link to="/settings" ><p className="fa fa-cog fa-fw"/>Einstellungen</Link>
+                            </li>
                             <li>
-                                <Link to="/" onClick={this.handleLogout}>Verlassen</Link>
+                                <Link to="/" onClick={this.handleLogout}><p className="fa fa-sign-out fa-fw"/>Verlassen</Link>
                             </li>
                         </ul>
                     </div>
