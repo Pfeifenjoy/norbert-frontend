@@ -29,8 +29,13 @@ export default class DetailEntry extends Component {
         const components = this.state.data.components ? this.state.data.components.map((comp, i) => {
             return <div key={i}>{createComponent(comp, this.handleCompChange.bind(this, i))}</div>
         }) : [];
+
+        let hashtags = "";
+        this.state.data.tags.forEach(tag => {
+            hashtags += "#" + tag;
+        });
         //Dialog to edit the entry
-        return <Modal show={true} onHide={this.handleEditClose.bind(this)}>
+        return <Modal show={true} onHide={this.handleEditClose.bind(this)} className="detailEntry">
                 <Modal.Header>
                     <Modal.Title>
                          <Input
@@ -45,6 +50,17 @@ export default class DetailEntry extends Component {
                     {components}
                 </Modal.Body>
                 <Modal.Footer>
+                    <div className="col-lg-7">
+                    <div className="input-group tags">
+                        <span className="input-group-addon">Tags: </span>
+                        <Input
+                            type="text"
+                            placeholder="#awesome"
+                            value={hashtags}
+                            onChange={this.handleChangeHashtag.bind(this)}
+                        />
+                    </div>
+                    </div>
                     <ButtonGroup>
                         <Button
                             bsStyle="danger"
@@ -114,6 +130,13 @@ export default class DetailEntry extends Component {
         this.state.data.components[id] = component;
         this.setState({data: this.state.data});
         updateEntry(this.state.data, this.props.id);
+    }
+    handleChangeHashtag(oEvent) {
+        let rawHashtags = oEvent.target.value;
+        let { data } = this.state;
+        data.tags = rawHashtags.split(/#| /).filter(tag => { return tag.length > 0 });
+        this.setState({data})
+        updateEntry(this.state.data);
     }
     handleEditClose() {
         stopEdit();
@@ -202,6 +225,9 @@ function createTask(component, change) {
     }
 }
 
+/**
+ * Choose the right generator function.
+ */
 function createComponent(comp, onChange) {
     let creator = function() {
         console.warn("Unknown component type: " + comp.type);

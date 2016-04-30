@@ -13,7 +13,6 @@ export default class RecommendationFeed extends Component {
 
     componentWillMount() {
         this.handleNewRecommendations = () => {
-            console.log("sdlkfj");
             this.setState({
                 recommendations: RecommendationStore.recommendations
             });
@@ -23,7 +22,7 @@ export default class RecommendationFeed extends Component {
     }
 
     componentWillUnmount() {
-        RecommendationStore.removeEventListener("change", this.handleNewRecommendations);
+        RecommendationStore.removeListener("change", this.handleNewRecommendations);
     }
 
     render() {
