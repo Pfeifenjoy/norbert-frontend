@@ -1,3 +1,6 @@
+/**
+ * @author Arwed Mett
+ */
 import React, { Component } from "react";
 import {Modal, Button, ButtonGroup, SplitButton, MenuItem, Input} from "react-bootstrap";
 import { deleteEntry, updateEntry, stopEdit } from "../../actions/EntryActions";
@@ -116,6 +119,13 @@ export default class DetailEntry extends Component {
         stopEdit();
     }
 }
+
+/*
+ * The following functions are generator functions for components.
+ * These functions get a model of the compenent and a change event listener.
+ * Than the return a html representation of the component.
+ */
+
 
 function createDescription(component, change) {
     let rows = component.data.split("\n").length;
