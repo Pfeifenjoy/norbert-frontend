@@ -2,6 +2,7 @@ import dispatcher from "../dispatcher";
 import constants from "../constants";
 import $ from "jquery";
 import ConfigStore from "../stores/ConfigStore";
+import UserStore from "../stores/UserStore";
 
 
 export function login(username, password) {
@@ -51,4 +52,15 @@ export function register(username, password) {
             username
         })
     });
+}
+
+export function changePassword(password_old, password_new) {
+	return $.ajax({
+		url: ConfigStore.apiLocation + "users/",
+		method: "PUT",
+		data: {
+			password_old,
+			password_new
+		}
+	});
 }

@@ -1,3 +1,7 @@
+/*
+	@author Arwed Mett, Dominic Steinhauser
+*/
+
 import React, {Component} from "react";
 import { logout } from "../actions/UserActions";
 import { Link } from "react-router";
