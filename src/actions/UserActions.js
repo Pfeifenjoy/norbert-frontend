@@ -1,3 +1,8 @@
+/*
+	Arwed Mett, Dominic Steinhauser
+*/
+
+
 import dispatcher from "../dispatcher";
 import constants from "../constants";
 import $ from "jquery";
@@ -62,5 +67,13 @@ export function changePassword(password_old, password_new) {
 			password_old,
 			password_new
 		}
+	});
+}
+
+export function deleteAccount(){
+	return $.ajax({
+		url: ConfigStore.apiLocation + "users/" + UserStore.username,
+		method: "DELETE",
+		data: {}
 	});
 }

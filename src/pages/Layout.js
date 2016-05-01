@@ -1,3 +1,7 @@
+/*
+	Arwed Mett
+*/
+
 import React, {Component} from "react";
 import TopBar from "../components/TopBar";
 

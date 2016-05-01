@@ -1,3 +1,7 @@
+/*
+	Arwed Mett
+*/
+
 import React, {Component} from "react";
 import Entry from "./entry/Entry.js";
 import EntryStore from "../stores/EntryStore";

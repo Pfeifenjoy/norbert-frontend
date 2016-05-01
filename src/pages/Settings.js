@@ -5,6 +5,7 @@
 import React, {Component} from "react";
 import UserStore from "../stores/UserStore";
 import { changePassword } from "../actions/UserActions";
+import { deleteAccount } from "../actions/UserActions";
 import ConfigStore from "../stores/ConfigStore";
 
 export default class Settings extends Component {
@@ -69,15 +70,25 @@ export default class Settings extends Component {
 					{password}
 					{rePassword}
 
-                        <input className="btn btn-sm btn-success " type="submit" value="Save"/>
+                        <input className="btn btn-sm btn-success " onClick={this.handleDeleteAcc()} type="submit" value="Save"/>
                     </fieldset>
                 </form>
             </div>
         </div>;
-		</div>	   
-
 		
-      
+		<div className=" panel panel-default">
+            <div className=" panel-heading">
+                <h3 className="panel-title">Account löschen</h3>
+            </div>
+            <div className="panel-body">
+			
+
+                        <input className="btn btn-sm btn-danger btn-block " onClick={this.handleDeleteAcc()} type="button" value="Account löschen"/>
+                    
+                
+            </div>
+        </div>;
+		</div>      
 	</div>
 		
     }
@@ -100,6 +111,11 @@ export default class Settings extends Component {
         });
     }
 	
+	handleDeleteAcc(){
+		//deleteAccount();
+	}
+	
+	
 	handleSubmit(oEvent) {
         oEvent.preventDefault();
         let password = this.state.password;
@@ -115,13 +131,13 @@ export default class Settings extends Component {
 				oldPassword: "",
             password: "",
             repassword:""
-			});
-			
-			
+			});			
 		}).fail(() => {
             this.setState({submitFailed: true});
         })
     }
+	
+	
 	
 
 }

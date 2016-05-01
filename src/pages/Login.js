@@ -1,3 +1,8 @@
+/*
+	Arwed Mett, Dominic Steinhasuer
+*/
+
+
 import React, {Component} from "react";
 import ConfigStore from "../stores/ConfigStore";
 import BaseUrlInput from "../components/BaseUrlInput";

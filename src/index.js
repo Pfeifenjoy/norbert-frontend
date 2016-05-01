@@ -1,3 +1,7 @@
+/*
+	@author Arwed Mett, Dominic Steinhauser
+*/
+
 require("./less/index.less");
 require("bootstrap-webpack");
 require("font-awesome-webpack");

@@ -1,3 +1,7 @@
+/*
+	Arwed Mett, Dominic Steinhauser
+*/
+
 import React, {Component} from "react";
 import {IndexLink} from "react-router";
 import { register } from "../actions/UserActions";
