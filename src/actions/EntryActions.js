@@ -2,6 +2,7 @@ import dispatcher from "../dispatcher";
 import constants from "../constants";
 import $ from "jquery";
 import ConfigStore from "../stores/ConfigStore";
+import EntryStore from "../stores/EntryStore";
 
 
 export function updateEntries() {
@@ -44,6 +45,7 @@ export function updateEntry(entry) {
         data: entry
     })
     .done(entry => {
+        console.log("entry updated 1");
         let { id } = entry;
         dispatcher.dispatch({
             type: constants.UPDATE_ENTRY,
@@ -83,5 +85,34 @@ export function stopEdit(id) {
 export function loadNewImages(bottom) {
     dispatcher.dispatch({
         type: constants.LOAD_NEW_IMAGES
+    });
+}
+
+export function uploadFile(file, entry) {
+    entry.components.push({
+        type: constants.DOCUMENT,
+        data: {
+            processing: true
+        }
+    })
+    return updateEntry(entry)
+    .done(() => {
+        let data = new FormData;
+        data.append("file", file);
+        data.append("entryId", entry.id);
+        data.append("componentId", entry.components.length - 1);
+        return $.ajax({
+            method: "POST",
+            url: ConfigStore.apiLocation + "files",
+            data,
+            contentType: false,
+            processData: false
+        })
+        .fail(e => {
+            console.error(e);
+        })
+    })
+    .done(() => {
+        startEdit(entry.id);
     });
 }

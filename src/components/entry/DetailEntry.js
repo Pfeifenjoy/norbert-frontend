@@ -3,7 +3,7 @@
  */
 import React, { Component } from "react";
 import {Modal, Button, ButtonGroup, SplitButton, MenuItem, Input} from "react-bootstrap";
-import { deleteEntry, updateEntry, stopEdit } from "../../actions/EntryActions";
+import { deleteEntry, updateEntry, stopEdit, uploadFile } from "../../actions/EntryActions";
 import EntryStore from "../../stores/EntryStore";
 import constants from "../../constants";
 
@@ -77,6 +77,7 @@ export default class DetailEntry extends Component {
                             <MenuItem onClick={this.addText.bind(this)}>Text</MenuItem>
                             <MenuItem onClick={this.addNotification.bind(this)}>Erinnerung</MenuItem>
                             <MenuItem onClick={this.addDocument.bind(this)}>Document</MenuItem>
+                            <input ref="fileUploader" type="file" style={{display: "none"}} />
                         </SplitButton>
                     </ButtonGroup>
                 </Modal.Footer>
@@ -109,9 +110,13 @@ export default class DetailEntry extends Component {
         });
     }
     addDocument() {
-        this.addComponent({
-            type: constants.DOCUMENT
+        let entry = this.state.data;
+        $(this.refs.fileUploader).change(function(e) {
+            if(this.ran) return;
+            this.ran = true;
+            uploadFile(this.files[0], entry);
         });
+        $(this.refs.fileUploader).click();
     }
     addComponent(comp) {
         if(!comp.data) comp.data = {};
@@ -193,11 +198,16 @@ function createNotification(component, change) {
 }
 
 function createDocument(component, change) {
-    return <div className="input-group">
-        <input className="form-control" type="file" />
-        <span className="input-group-btn">
-            <button className="fa fa-paperclip btn"></button>
-        </span>
+    let content = component.data.processing ? 
+        <p>File wird verarbeitet...</p> 
+        :
+        <a 
+            href={component.data.url}
+        >
+            component.data.url
+        </a>
+    return <div>
+        {content}
     </div>;
 }
 
