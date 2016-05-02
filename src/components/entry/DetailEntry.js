@@ -182,7 +182,7 @@ function createNotification(component, change) {
     return <div
             className="input-group notification"
         >
-        <span className="input-group-addon fa fa-bell" />
+            <span className="input-group-addon"><span className="fa fa-bell" /></span>
         <input
             onChange={onChange}
             type="date"
@@ -202,9 +202,10 @@ function createDocument(component, change) {
         <p>File wird verarbeitet...</p> 
         :
         <a 
-            href={component.data.url}
+            className="fa fa-file"
+            href={"http://" + component.data.url}
         >
-            component.data.url
+            { " " + component.data.url }
         </a>
     return <div>
         {content}

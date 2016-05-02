@@ -73,6 +73,22 @@ const Entry = React.createClass({
             </div>
         })
 
+        const documents = this.getComponents(constants.DOCUMENT)
+        .map((comp, i) => {
+            let content = comp.data.processing ? 
+                <p>File wird verarbeitet...</p> 
+                :
+                <a 
+                    className="fa fa-file"
+                    href={"http://" + comp.data.url}
+                >
+                    { " " + comp.data.url }
+                </a>;
+            return <div className="breakWord" key={1}>
+                {content}
+            </div>
+        });
+
         const notificationSign = this.hasCompWithType(constants.NOTIFICATION) ? <span className="notificationSign fa fa-bell" /> : [];
         const documentSign = this.hasCompWithType(constants.DOCUMENT) ? <span className="documentSign fa fa-file" /> : [];
         
@@ -92,6 +108,7 @@ const Entry = React.createClass({
                 <h3 className="title">{this.state.data.title}</h3>
                 {descriptions}
                 {tasks}
+                {documents}
                 {signs}
             </div>;
     },
