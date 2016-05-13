@@ -16,7 +16,8 @@ export default class Settings extends Component {
             oldPassword: "",
             password: "",
             repassword:"",
-            submitFailed: false
+            submitFailed: false,
+			accountDelFailed: false
         }
     }
     componentWillMount() {
@@ -25,11 +26,15 @@ export default class Settings extends Component {
         });
     }
 	
+	
+	
     render() {
 		
 		const oldPasswordState = "form-group" + (this.state.submitFailed && this.state.password.length < 10 ? " has-error" : "");
 		const passwordState = "form-group" + (this.state.submitFailed && this.state.password.length < 10 ? " has-error" : "");
 		const rePasswordState = "form-group" + (this.state.submitFailed && this.state.password.length < 10 ? " has-error" : "");
+		
+		const deleteAccFailedMsg = <p>Account could not be deleted.</p>;
 		
 		const oldPassword =  <div className={oldPasswordState}>
             <input className="form-control" placeholder="Current password"
@@ -69,8 +74,8 @@ export default class Settings extends Component {
 					{oldPassword}
 					{password}
 					{rePassword}
-
-                        <input className="btn btn-sm btn-success " onClick={this.handleDeleteAcc()} type="submit" value="Save"/>
+						
+                        <input className="btn btn-sm btn-success "  type="submit" value="Save"/>
                     </fieldset>
                 </form>
             </div>
@@ -82,8 +87,16 @@ export default class Settings extends Component {
             </div>
             <div className="panel-body">
 			
-
-                        <input className="btn btn-sm btn-danger btn-block " onClick={this.handleDeleteAcc()} type="button" value="Account löschen"/>
+					{
+						(() => {
+							if(this.state.accountDelFailed){
+							
+								return deleteAccFailedMsg;
+							}
+						})()
+					}
+                   <input className="btn btn-sm btn-danger btn-block " onClick={this.handleDeleteAcc.bind(this)} type="button" value="Account löschen"/>
+				   
                     
                 
             </div>
@@ -112,7 +125,10 @@ export default class Settings extends Component {
     }
 	
 	handleDeleteAcc(){
-		//deleteAccount();
+		deleteAccount().fail( () => {
+			
+			this.setState({accountDelFailed: true});
+		});
 	}
 	
 	

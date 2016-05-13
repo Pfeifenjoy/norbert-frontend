@@ -72,8 +72,8 @@ export function changePassword(password_old, password_new) {
 
 export function deleteAccount(){
 	return $.ajax({
-		url: ConfigStore.apiLocation + "users/" + UserStore.username,
+		url: ConfigStore.apiLocation + "users/",
 		method: "DELETE",
 		data: {}
-	});
+	}).done(logout);
 }
