@@ -1,5 +1,5 @@
 /*
-	Arwed Mett
+* @author Arwed Mett
 */
 
 import React, {Component} from "react";
@@ -7,30 +7,52 @@ import ConfigStore from "../stores/ConfigStore";
 import BaseUrlInput from "../components/BaseUrlInput";
 import { Link } from "react-router";
 import { register } from "../actions/UserActions";
+import UserStore from "../stores/UserStore";
 let logo = require("../img/logo.png");
 
-export default class Register extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+const Register = React.createClass({
+    getInitialState() {
+        return {
             config: ConfigStore.getAll(),
             username: "",
             password: "",
             repassword:"",
             submitFailed: false
         }
-    }
+    },
+    contextTypes: {
+        router: React.PropTypes.object.isRequired
+    },
     componentWillMount() {
         ConfigStore.on("change", () => {
             this.setState({ config: ConfigStore.getAll() });
         });
-    }
+        this.handleUserUpdate = () => {
+            this.setState({
+                submitFailed: UserStore.authenticationFailed,
+                loading: false,
+            })
+            if(UserStore.authenticated) {
+                const { location } = this.props;
+                if(location.state && location.state.nextPathname) {
+                    this.context.router.replace(location.state.nextPathname)
+                }
+                else {
+                    this.context.router.replace("/");
+                }
+            }
+        };
+        UserStore.on("change", this.handleUserUpdate);
+    },
+    componentWillUnmount() {
+        UserStore.removeListener("change", this.handleUserUpdate);
+    },
     render() {
         const usernameState = "form-group" + (this.state.submitFailed && this.state.username.trim() === "" ? " has-error" : "");
         const username = <div className={usernameState}>
             <input className="form-control" placeholder="Username"
                    value={this.state.username}
-                   onChange={this.handleUsernameChange.bind(this)} name="username"
+                   onChange={this.handleUsernameChange} name="username"
                    type="text"/>
         </div>;
         const passwordState = "form-group" + (this.state.submitFailed && this.state.password.length < 10 ? " has-error" : "");
@@ -38,14 +60,14 @@ export default class Register extends Component {
         const password = <div className={passwordState}>
             <input className="form-control" placeholder="Password"
                    value={this.state.password}
-                   onChange={this.handlePasswordChange.bind(this)} name="password"
+                   onChange={this.handlePasswordChange} name="password"
                    type="password"
             />
         </div>;
         const rePassword =  <div className={repasswordState}>
             <input className="form-control" placeholder="Repassword"
                    value={this.state.repassword}
-                   onChange={this.handleRePasswordChange.bind(this)} name="repassword"
+                   onChange={this.handleRePasswordChange} name="repassword"
                    type="password"
             />
         </div>;
@@ -55,7 +77,7 @@ export default class Register extends Component {
             </div>
             <div className="panel-body">
                 <form acceptCharset="UTF-8" role="form" action="index.html#/app" method="post"
-                      onSubmit={this.handleSubmit.bind(this)}>
+                      onSubmit={this.handleSubmit}>
                     <fieldset>
                         {username}
                         {password}
@@ -79,25 +101,25 @@ export default class Register extends Component {
                 </div>
             </section>
         </div>
-    }
+    },
 
     handleUsernameChange(oEvent) {
         this.setState({
             username: oEvent.target.value
         });
-    }
+    },
 
     handleRePasswordChange(oEvent) {
         this.setState({
             repassword: oEvent.target.value
         });
-    }
+    },
 
     handlePasswordChange(oEvent) {
         this.setState({
             password: oEvent.target.value
         });
-    }
+    },
 
     handleSubmit(oEvent) {
         oEvent.preventDefault();
@@ -114,4 +136,6 @@ export default class Register extends Component {
             this.setState({submitFailed: true});
         })
     }
-}
+});
+
+export default Register;

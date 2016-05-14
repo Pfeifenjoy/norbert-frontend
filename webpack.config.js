@@ -15,9 +15,10 @@ module.exports = {
     entry: entry,
     output: { 
         path: __dirname + "/build" ,
-        filename: 'bundle.js',
+        filename: "bundle.js",
         publicPath: "/build/"
     },
+    target: "web",
 //    devServer: {
 //        contentBase: "./build",
 //    },
@@ -36,7 +37,7 @@ module.exports = {
         loaders: [
             {
                 test: /.jsx?$/,
-                loaders: ["react-hot", 'babel'],
+                loaders: ["react-hot", "babel"],
                 exclude: /node_modules/,
             },
             {

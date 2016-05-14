@@ -19,11 +19,13 @@ export function login(username, password) {
             password
         }
     }).done(() => {
+        console.log("Logged in as user " + username + ".");
         dispatcher.dispatch({
             type: constants.AUTHENTICATED,
             username, password
         });
-    }).fail(() => {
+    }).fail(e => {
+        console.error("Authentication failed: " + e);
         dispatcher.dispatch({
             type: constants.AUTHENTICATION_FAILED
         });
@@ -35,6 +37,7 @@ export function logout() {
         url: ConfigStore.apiLocation + "users/logout",
         method: "POST"
     }).done(() => {
+        console.log("Logged out user.");
         dispatcher.dispatch({
             type: constants.UNAUTHENTICATED
         });
@@ -50,8 +53,10 @@ export function register(username, password) {
             password
         }
     }).done(() => {
+        console.log("Registration successfull for: " + username);
         return login(username, password);
     }).fail(e => {
+        console.error(`Could not register ${username}: ${e}`);
         dispatcher.dispatch({
             type: constants.NEW_USER_FAILED,
             username
@@ -67,7 +72,10 @@ export function changePassword(password_old, password_new) {
 			password_old,
 			password_new
 		}
-	});
+    })
+    .done(() => {
+        console.log("Changed password successfully.");
+    })
 }
 
 export function deleteAccount(){
@@ -75,5 +83,9 @@ export function deleteAccount(){
 		url: ConfigStore.apiLocation + "users/" + UserStore.username,
 		method: "DELETE",
 		data: {}
-	});
+    })
+    .done(() => {
+        console.log(`Deleted account ${UserStore.username}.`);
+    })
+    .done(logout)
 }

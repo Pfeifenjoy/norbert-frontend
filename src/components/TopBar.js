@@ -29,9 +29,6 @@ export default class TopBar extends Component {
 
                         <form className="navbar-form navbar-left" role="search">
                             
-                                <div className="form-group">
-                                    <input type="text" className="form-control search" placeholder="Suche" />
-                                </div>
                             
                         </form>
                         <ul className="nav navbar-nav navbar-right">

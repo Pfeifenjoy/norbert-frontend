@@ -74,20 +74,8 @@ export default class Settings extends Component {
                     </fieldset>
                 </form>
             </div>
-        </div>;
+        </div>
 		
-		<div className=" panel panel-default">
-            <div className=" panel-heading">
-                <h3 className="panel-title">Account löschen</h3>
-            </div>
-            <div className="panel-body">
-			
-
-                        <input className="btn btn-sm btn-danger btn-block " onClick={this.handleDeleteAcc()} type="button" value="Account löschen"/>
-                    
-                
-            </div>
-        </div>;
 		</div>      
 	</div>
 		
