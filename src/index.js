@@ -1,7 +1,9 @@
 /*
-	@author Arwed Mett, Dominic Steinhauser
+ * @author Arwed Mett, Dominic Steinhauser
+ * @description This is the main file where all the routing is done.
 */
 
+//Require all dependencies
 require("./less/index.less");
 require("bootstrap-webpack");
 require("font-awesome-webpack");
@@ -22,6 +24,9 @@ import UserStore from "./stores/UserStore";
 
 const app = document.getElementById("content");
 
+/**
+ *  Go to the login if someone logs out.
+ */
 UserStore.on("change", () => {
     if(!UserStore.authenticated)
         browserHistory.push("/login")

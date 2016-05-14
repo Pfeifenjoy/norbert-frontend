@@ -29,7 +29,6 @@
     "bootstrap-loader": "^1.0.10",
     "bootstrap-webpack": "0.0.5",
     "css-loader": "^0.23.1",
-    "electron-prebuilt": "^1.0.2",
     "eslint": "^2.10.0",
     "eslint-plugin-react": "^5.1.1",
     "exports-loader": "^0.6.3",
