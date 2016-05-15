@@ -41,7 +41,7 @@ export default class Settings extends Component {
 		
 		
 		const oldPassword =  <div className={oldPasswordState}>
-            <input className="form-control" placeholder="Current password"
+            <input className="form-control" placeholder="Aktuelles Passwort"
                    value={this.state.oldPassword}
                    onChange={this.handleOldPasswordChange.bind(this)} name="oldPassword"
                    type="password"
@@ -50,7 +50,7 @@ export default class Settings extends Component {
 		
 		
 		const password =  <div className="passwordState">
-            <input className="form-control" placeholder="New password"
+            <input className="form-control" placeholder="Neues Passwort"
 					value={this.state.password}
                    onChange={this.handlePasswordChange.bind(this)} name="password"
                    type="password"
@@ -58,7 +58,7 @@ export default class Settings extends Component {
 			</div>;
 			
 		const rePassword =  <div className="rePasswordState">
-            <input className="form-control" placeholder="New password"
+            <input className="form-control" placeholder="Neues Passwort"
                    value={this.state.repassword}
                    onChange={this.handleRePasswordChange.bind(this)} name="repassword"
                    type="password"
@@ -100,7 +100,7 @@ export default class Settings extends Component {
 					{password}
 					{rePassword}
 						
-                        <input className="btn btn-sm btn-success "  type="submit" value="Save"/>
+                        <input className="btn btn-sm btn-success "  type="submit" value="Speichern"/>
                     </fieldset>
                 </form>
             </div>

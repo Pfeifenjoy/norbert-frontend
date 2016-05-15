@@ -54,7 +54,7 @@ const Register = React.createClass({
 
         const usernameState = "form-group" + (this.state.submitFailed && this.state.username.trim() === "" ? " has-error" : "");
         const username = <div className={usernameState}>
-            <input className="form-control" placeholder="Username"
+            <input className="form-control" placeholder="Benutzername"
                    value={this.state.username}
                    onChange={this.handleUsernameChange} name="username"
                    type="text"/>
@@ -63,7 +63,7 @@ const Register = React.createClass({
         const passwordState = "form-group" + (this.state.submitFailed && this.state.password.length < 10 ? " has-error" : "");
         const repasswordState = "form-group" + (this.state.submitFailed && this.state.repassword.length < 10 ? " Has-error" : "" );
         const password = <div className={passwordState}>
-            <input className="form-control" placeholder="Password"
+            <input className="form-control" placeholder="Passwort"
                    value={this.state.password}
                    onChange={this.handlePasswordChange} name="password"
                    type="password"
@@ -71,7 +71,7 @@ const Register = React.createClass({
         </div>;
 
         const rePassword =  <div className={repasswordState}>
-            <input className="form-control" placeholder="Repassword"
+            <input className="form-control" placeholder="Passwort"
                    value={this.state.repassword}
                    onChange={this.handleRePasswordChange} name="repassword"
                    type="password"
@@ -80,7 +80,7 @@ const Register = React.createClass({
         
         const registerForm = <div className="panel panel-default">
             <div className="panel-heading">
-                <h3 className="panel-title">Please register</h3>
+                <h3 className="panel-title">Registrierung</h3>
             </div>
             <div className="panel-body">
                 {submitFailedMessage}
@@ -92,10 +92,10 @@ const Register = React.createClass({
                         {rePassword}
                         <BaseUrlInput />
 
-                        <input className="btn btn-lg btn-success btn-block" type="submit" value="Register"/>
+                        <input className="btn btn-lg btn-success btn-block" type="submit" value="Registrieren"/>
                     </fieldset>
                 </form>
-                <span>Or <Link to="login">login</Link></span>
+                <span>Oder <Link to="login">Anmelden</Link></span>
             </div>
         </div>;
 
