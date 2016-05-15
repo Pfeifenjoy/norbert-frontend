@@ -34,7 +34,6 @@ export default class Settings extends Component {
 		const passwordState = "form-group" + (this.state.submitFailed && this.state.password.length < 10 ? " has-error" : "");
 		const rePasswordState = "form-group" + (this.state.submitFailed && this.state.password.length < 10 ? " has-error" : "");
 		
-		const deleteAccFailedMsg = <p>Account could not be deleted.</p>;
 		
 		const oldPassword =  <div className={oldPasswordState}>
             <input className="form-control" placeholder="Current password"
@@ -60,6 +59,21 @@ export default class Settings extends Component {
                    type="password"
             />
 			</div>;
+
+		const deleteAccFailedMsg = <p>Account could not be deleted.</p>;
+        const deleteAccount = <div className="panel-body"> 
+            <input
+                className="btn btn-sm btn-danger btn-block"
+                onClick={this.handleDeleteAcc.bind(this)}
+                type="button" value="Account löschen"/> 
+                {
+                    (() => { 
+                        if(this.state.accountDelFailed){ 
+                            return deleteAccFailedMsg; 
+                        } 
+                    })() 
+                } 
+        </div> 
 		
         return <div className="main_bg">
 		<div className=" settings container"> 
@@ -80,6 +94,7 @@ export default class Settings extends Component {
                 </form>
             </div>
         </div>
+        {deleteAccount}
 		</div>      
 	</div>
 		

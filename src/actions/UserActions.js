@@ -80,9 +80,8 @@ export function changePassword(password_old, password_new) {
 
 export function deleteAccount(){
 	return $.ajax({
-		url: ConfigStore.apiLocation + "users/",
+		url: ConfigStore.apiLocation + "users/" + UserStore.username,
 		method: "DELETE",
-		data: {}
     })
     .done(() => {
         console.log(`Deleted account ${UserStore.username}.`);

@@ -32,10 +32,6 @@ const Register = React.createClass({
         });
         //Log in the user if he is registrated
         this.handleUserUpdate = () => {
-            this.setState({
-                submitFailed: UserStore.authenticationFailed,
-                loading: false,
-            })
             if(UserStore.authenticated) {
                 const { location } = this.props;
                 if(location.state && location.state.nextPathname) {
@@ -53,6 +49,8 @@ const Register = React.createClass({
         UserStore.removeListener("change", this.handleUserUpdate);
     },
     render() {
+
+        const submitFailedMessage = this.state.submitFailed ? <p>Could not register user.</p> : [];
 
         const usernameState = "form-group" + (this.state.submitFailed && this.state.username.trim() === "" ? " has-error" : "");
         const username = <div className={usernameState}>
@@ -85,6 +83,7 @@ const Register = React.createClass({
                 <h3 className="panel-title">Please register</h3>
             </div>
             <div className="panel-body">
+                {submitFailedMessage}
                 <form acceptCharset="UTF-8" role="form" action="index.html#/app" method="post"
                       onSubmit={this.handleSubmit}>
                     <fieldset>
