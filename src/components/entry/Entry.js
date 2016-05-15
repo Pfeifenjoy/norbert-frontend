@@ -101,7 +101,7 @@ const Entry = React.createClass({
         const notifications = this.getComponents(constants.NOTIFICATION)
         .map((comp, i) => {
             return <div key={i}>
-                <p>{(() => {return moment(new Date(comp.data.date)).locale("de").fromNow()})()}</p>
+                <p>{(() => {return moment(parseInt(comp.data.date)).locale("de").fromNow()})()}</p>
             </div>
         });
 

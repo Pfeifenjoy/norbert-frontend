@@ -182,7 +182,8 @@ function createDescription(component, change) {
 
 
 function createNotification(component, change) {
-    let date = new Date(component.data.date);
+    let date = new Date(parseInt(component.data.date));
+    
     let day = date.getDate() + "";
     //This is the reason why i hate dates.
     //Who came up with the idea to start counting months with 0.
