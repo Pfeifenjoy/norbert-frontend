@@ -1,8 +1,9 @@
 /*
-	Arwed Mett
+* @author Arwed Mett
 */
 
 @import "colors.less";
+@import "action-buttons.less";
 
 .recommendation {
     diplay: block;
@@ -21,19 +22,14 @@
 }
 
 .recommendation .actions .trigger {
-    
-    border-radius: 100%;
-    border-style: solid;
-    border-width: 0.01em;
-    padding: 0.4em;
+    .actionButton
 }
-
 
 .recommendation .accept:hover {
-    background-color: yellow;
+    background-color: @acceptColor;
 }
 .recommendation .reject:hover {
-    background-color: red;
+    background-color: @rejectColor;
 }
 
 .recommendation * {

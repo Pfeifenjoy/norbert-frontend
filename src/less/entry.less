@@ -2,8 +2,9 @@
 * @author Arwed Mett, Dominic Steinhauser
 */
 @import "colors.less";
+@import "action-buttons.less";
 
-@modifyButtonColor: yellow;
+@modifyButtonColor: @acceptColor;
 @informationColor: white;
 @entryColor: @emerald;
 
@@ -38,12 +39,7 @@
     right: -0.3em;
     top: -0.3em;
    
-    border-radius: 100%;
-    border-style: solid;
-    border-width: 0.01em;
-    padding: 0.5em;
-
-    cursor: pointer;
+    .actionButton
 }
 .entry .modifyButton:hover {
     background-color: @modifyButtonColor;
@@ -88,4 +84,8 @@
 
 .detailEntry .notification {
     width: 100%;
+}
+
+.newsfeedObject .rejectAction:hover {
+    background-color: @rejectColor;
 }

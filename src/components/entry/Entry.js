@@ -116,7 +116,7 @@ const Entry = React.createClass({
         </div>
             :
         <div
-            className={`fa fa-times modifyButton ${this.state.mouseOver ? "" : "hidden"}`}
+            className={`fa fa-times modifyButton rejectAction ${this.state.mouseOver ? "" : "hidden"}`}
             onClick={this.hideInformation}
         />;
 
