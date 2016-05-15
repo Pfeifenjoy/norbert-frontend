@@ -1,28 +1,50 @@
+/**
+ * @author Arwed Mett
+ */
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 import constants from "../constants";
 
+/**
+ * This is the main store to manage newsfeed objects.
+ * In the frontend all newsfeed objects are called entries.
+ */
 class EntryStore extends EventEmitter {
     constructor() {
         super();
         this.data = {
             entries: [],
-            editEntry: null
+            editEntry: null //This is the entry which is currently edited.
         }
     }
+
+    /**
+    * A list of all entries.
+    */
     get entries() {
         return this.data.entries;
     }
 
+    /**
+    * Get the entry which is currently edited.
+    * Also use this to check if there is an edit entry.
+    */
     get editEntry() {
         return this.data.editEntry;
     }
 
+    /**
+    * Get a specific entry by an id.
+    */
     getEntry(id) {
         return this.data.entries.find(entry => {
             return entry.id === id;
         })
     }
+
+    /**
+    * Get the index of an entry by a specific id.
+    */
     getEntryIndex(id) {
         return this.data.entries.findIndex(entry => {
             return entry.id === id;

@@ -105,7 +105,6 @@ export default class Settings extends Component {
 	
 	handleDeleteAcc(){
 		deleteAccount().fail( () => {
-			
 			this.setState({accountDelFailed: true});
 		});
 	}

@@ -1,7 +1,14 @@
+/**
+ * @author Arwed Mett
+ */
 import {EventEmitter} from "events";
 import dispatcher from "../dispatcher";
 import constants from "../constants";
 
+/**
+ * Manage all the user specific data.
+ * This is used for login, logout, register or other user specific settings.
+ */
 class UserStore extends EventEmitter {
     constructor() {
         super();
@@ -14,6 +21,9 @@ class UserStore extends EventEmitter {
     getAll() {
         return this.data;
     }
+    /**
+    * Is set if the user is authenticated.
+    */
     get authenticated() {
         return this.data.username === "" ? false : true;
     }
@@ -24,6 +34,9 @@ class UserStore extends EventEmitter {
         sessionStorage.setItem("username", name);
         this.data.username = name;
     }
+    /**
+    * Check if a previous authentication has failed.
+    */
     get authenticationFailed() {
         return this.data.authenticationFailed;
     }

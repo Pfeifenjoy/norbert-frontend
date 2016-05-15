@@ -1,5 +1,5 @@
 /*
-	Arwed Mett, Dominic Steinhauser
+ * @author Arwed Mett, Dominic Steinhauser
 */
 
 
@@ -8,6 +8,9 @@ import TopBar from "../components/TopBar";
 import Newsfeed from "../components/Newsfeed";
 import RecommendationFeed from "../components/RecommendationFeed";
 
+/**
+ * The main page where the newsfeed and all recommendations are.
+ */
 export default class Login extends Component {
 
     render() {

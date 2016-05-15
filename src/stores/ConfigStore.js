@@ -1,7 +1,14 @@
+/**
+ * @author Arwed Mett
+ * @description Manage all configurations
+ */
 import { EventEmitter } from "events";
 import dispatcher from "../dispatcher";
 import constants from "../constants";
 
+/**
+ * A store to manage all settings like the api location.
+ */
 class ConfigStore extends EventEmitter {
     constructor() {
         super();
@@ -24,6 +31,10 @@ class ConfigStore extends EventEmitter {
         return this.config.serverRoot + this.config.apiLocation;
     }
 
+    /**
+    * Set a new location for the server root.
+    * This might be used in a local app.
+    */
     updateServerRoot(sNewRoot) {
         this.config.serverRoot = sNewRoot;
         this.save();

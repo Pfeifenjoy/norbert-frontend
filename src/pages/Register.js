@@ -20,6 +20,9 @@ const Register = React.createClass({
             submitFailed: false
         }
     },
+    /**
+     * Require the router for routing after the registration.
+     */
     contextTypes: {
         router: React.PropTypes.object.isRequired
     },
@@ -27,6 +30,7 @@ const Register = React.createClass({
         ConfigStore.on("change", () => {
             this.setState({ config: ConfigStore.getAll() });
         });
+        //Log in the user if he is registrated
         this.handleUserUpdate = () => {
             this.setState({
                 submitFailed: UserStore.authenticationFailed,
@@ -45,9 +49,11 @@ const Register = React.createClass({
         UserStore.on("change", this.handleUserUpdate);
     },
     componentWillUnmount() {
+        //Clean up event listeners
         UserStore.removeListener("change", this.handleUserUpdate);
     },
     render() {
+
         const usernameState = "form-group" + (this.state.submitFailed && this.state.username.trim() === "" ? " has-error" : "");
         const username = <div className={usernameState}>
             <input className="form-control" placeholder="Username"
@@ -55,6 +61,7 @@ const Register = React.createClass({
                    onChange={this.handleUsernameChange} name="username"
                    type="text"/>
         </div>;
+
         const passwordState = "form-group" + (this.state.submitFailed && this.state.password.length < 10 ? " has-error" : "");
         const repasswordState = "form-group" + (this.state.submitFailed && this.state.repassword.length < 10 ? " Has-error" : "" );
         const password = <div className={passwordState}>
@@ -64,6 +71,7 @@ const Register = React.createClass({
                    type="password"
             />
         </div>;
+
         const rePassword =  <div className={repasswordState}>
             <input className="form-control" placeholder="Repassword"
                    value={this.state.repassword}
@@ -71,6 +79,7 @@ const Register = React.createClass({
                    type="password"
             />
         </div>;
+        
         const registerForm = <div className="panel panel-default">
             <div className="panel-heading">
                 <h3 className="panel-title">Please register</h3>
@@ -90,6 +99,7 @@ const Register = React.createClass({
                 <span>Or <Link to="login">login</Link></span>
             </div>
         </div>;
+
         return <div id="login_wrapper">
             <section className="login container">
                 <img src={logo} className="logo" />

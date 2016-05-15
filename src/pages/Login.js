@@ -1,16 +1,20 @@
 /*
-	Arwed Mett, Dominic Steinhasuer
+* @author Arwed Mett, Dominic Steinhasuer
 */
 
 
-import React, {Component} from "react";
+import React, { Component } from "react";
 import ConfigStore from "../stores/ConfigStore";
 import BaseUrlInput from "../components/BaseUrlInput";
-import {Link} from "react-router";
+import { Link } from "react-router";
 import { login } from "../actions/UserActions";
 import UserStore from "../stores/UserStore";
 let logo = require("../img/logo.png");
 
+/**
+ * This is the login page.
+ * Provides a form for a user to login.
+ */
 const Login = React.createClass({
 
     getInitialState() {
@@ -23,6 +27,9 @@ const Login = React.createClass({
         }
     },
 
+    /**
+     * Require the router to navigate to the next page.
+     */
     contextTypes: {
         router: React.PropTypes.object.isRequired
     },
@@ -32,6 +39,7 @@ const Login = React.createClass({
         };
         ConfigStore.on("change", this.handleConfigUpdate);
         this.handleUserUpdate = () => {
+            //navigate to the next page if the user is logged in.
             this.setState({
                 submitFailed: UserStore.authenticationFailed,
                 loading: false,
@@ -49,11 +57,16 @@ const Login = React.createClass({
         UserStore.on("change", this.handleUserUpdate);
     },
     componentWillUnmount() {
+        //clear all listeners, to prevent memory leaks.
         ConfigStore.removeListener("change", this.handleConfigUpdate);
         UserStore.removeListener("change", this.handleUserUpdate);
     },
     render() {
+
+        //check for errors
         const usernameState = "form-group" + (this.state.submitFailed && this.state.username.trim() === "" ? " has-error" : "");
+
+        //username input field
         const username = <div className={usernameState}>
             <input className="form-control" placeholder="Username"
                value={this.state.username}
@@ -61,7 +74,11 @@ const Login = React.createClass({
                disabled={this.state.loading}
                type="text"/>
            </div>;
+
+        //check for errors
         const passwordState = "form-group" + (this.state.submitFailed && this.state.password.length < 10 ? " has-error" : "");
+
+        //password input field
         const password = <div className={passwordState}>
             <input className="form-control" placeholder="Password"
                value={this.state.password}
@@ -70,9 +87,12 @@ const Login = React.createClass({
                disabled={this.state.loading}
                />
            </div>;
-       const loginFailed = this.state.submitFailed ? 
+
+        //check for errors
+        const loginFailed = this.state.submitFailed ? 
            <div className="alert alert-dange">Login failed.</div> : [];
-       const loginForm = <div className="panel panel-default">
+        //render the main form.
+        const loginForm = <div className="panel panel-default">
             <div className="panel-heading">
                 <h3 className="panel-title">Please sign in</h3>
             </div>
@@ -93,7 +113,6 @@ const Login = React.createClass({
                 </form>
                 <span>Or <Link to="register">register</Link></span>
             </div>
-
         </div>;
         return <div id="login_wrapper">
             <section className="login container">
@@ -120,6 +139,9 @@ const Login = React.createClass({
         });
     },
 
+    /**
+     * Handle the login of the user.
+     */
     handleSubmit(oEvent) {
         oEvent.preventDefault();
         let username = this.state.username.trim();
@@ -128,6 +150,7 @@ const Login = React.createClass({
             this.setState({submitFailed: true});
             return;
         }
+        //Start the authentication process.
         login(username, password);
     }
 })
