@@ -38,8 +38,8 @@ class RecommendationStore extends EventEmitter {
     * This is the index of the recommendations array.
     */
     getIndexOfRecommendation(id) {
-        this.data.recommendations.findIndex(recommendation => {
-            return recommendation.id === id;
+        return this.data.recommendations.findIndex(recommendation => {
+            return recommendation.id == id;
         });
     }
 

@@ -70,7 +70,6 @@ export function updateEntry(entry) {
         });
     })
     return lastXhr;
-    //TODO implement message system and add entries could not be loaded method
 }
 
 /**

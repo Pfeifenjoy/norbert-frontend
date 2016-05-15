@@ -193,6 +193,7 @@ function createNotification(component, change) {
 
     function onChange(oEvent) {
         component.data.date = oEvent.target.value;
+        console.log(oEvent.target.value);
         change(component);
     }
 }
