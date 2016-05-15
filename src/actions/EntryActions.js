@@ -55,6 +55,7 @@ let lastXhr;
 export function updateEntry(entry) {
     //kill all previous request, so that always the last
     //will be saved
+    console.log(entry);
     if(lastXhr) lastXhr.abort();
     lastXhr = $.ajax({
         url: ConfigStore.apiLocation + "entries/" + entry.id,

@@ -108,7 +108,7 @@ export default class DetailEntry extends Component {
         this.addComponent({
             type: constants.NOTIFICATION,
             data: {
-                date: new Date()
+                date: Date.now()
             }
         });
     }
