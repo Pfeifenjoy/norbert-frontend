@@ -1,8 +1,15 @@
+/**
+ * @author Arwed Mett
+ */
 import React, {Component} from "react";
 import configStore from "../stores/ConfigStore";
 import deviceStore from "../stores/DeviceStore";
 import {changeServerRoot} from "../actions/ConfigActions";
 
+/**
+ * This is an input field to change the server root.
+ * Use this field in the login of an offline app.
+ */
 export default class BaseUrlInput extends Component {
     constructor(props) {
         super(props);

@@ -1,10 +1,22 @@
+/**
+ * @author Arwed Mett
+ * @description All actions which are related to entries and information.
+ */
 import dispatcher from "../dispatcher";
 import constants from "../constants";
 import $ from "jquery";
 import ConfigStore from "../stores/ConfigStore";
 import EntryStore from "../stores/EntryStore";
 
+/*
+ * All these methods return a deferred object.
+ * Only use this deferred object for error detection.
+ * All these methods make asynchronous calls to the backend.
+ */
 
+/**
+ * Reinitialize all entries
+ */
 export function updateEntries() {
     return $.ajax({
         url: ConfigStore.apiLocation + "newsfeed/",
@@ -16,9 +28,11 @@ export function updateEntries() {
             entries
         })
     })
-    //TODO implement message system and add entries could not be loaded method
 }
 
+/**
+ * Create a new entry.
+ */
 export function createEntry(entry) {
     return $.ajax({
         url: ConfigStore.apiLocation + "entries",
@@ -31,10 +45,13 @@ export function createEntry(entry) {
             entry
         })
     })
-    //TODO implement message system and add entries could not be loaded method
 }
 
+//save previous ajax requests.
 let lastXhr;
+/**
+ * Update an Entry.
+ */
 export function updateEntry(entry) {
     //kill all previous request, so that always the last
     //will be saved
@@ -56,6 +73,9 @@ export function updateEntry(entry) {
     //TODO implement message system and add entries could not be loaded method
 }
 
+/**
+ * Delete an entry.
+ */
 export function deleteEntry(id) {
     return $.ajax({
         url: ConfigStore.apiLocation + "entries/" + id,
@@ -69,6 +89,9 @@ export function deleteEntry(id) {
     })
 }
 
+/**
+ * This loads an entry by a given id into the edit modal.
+ */
 export function startEdit(id) {
     dispatcher.dispatch({
         type: constants.START_EDIT_ENTRY,
@@ -76,18 +99,18 @@ export function startEdit(id) {
     });
 }
 
+/**
+ * This stops the edit process of the modal.
+ */
 export function stopEdit(id) {
     dispatcher.dispatch({
         type: constants.STOP_EDIT_ENTRY
     })
 }
 
-export function loadNewImages(bottom) {
-    dispatcher.dispatch({
-        type: constants.LOAD_NEW_IMAGES
-    });
-}
-
+/**
+ * Upload a file to a specific entry component.
+ */
 export function uploadFile(file, entry) {
     entry.components.push({
         type: constants.DOCUMENT,

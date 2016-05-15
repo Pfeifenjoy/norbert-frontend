@@ -1,8 +1,15 @@
+/**
+ * @author Arwed Mett
+ */
 import React, {Component} from "react";
 import { startEdit, updateEntry } from "../../actions/EntryActions";
 import EntryStore from "../../stores/EntryStore";
 import constants from "../../constants";
 
+
+/**
+ * A tile containing an entry or an information.
+ */
 const Entry = React.createClass({
     getInitialState() {
         return {
@@ -33,6 +40,7 @@ const Entry = React.createClass({
     },
 
     componentWillUnmount() {
+        //unregister all listeners
         EntryStore.removeListener("change", this.handleEntryStoreChange);
         EntryStore.removeListener("updateEntry", this.handleEntryUpdate);
     },
@@ -58,12 +66,12 @@ const Entry = React.createClass({
 
         const descriptions = this.getComponents(constants.DESCRIPTION)
         .map((comp, i) => {
-            return <div className="breakWord" key={i}>{comp.data.text}</div>;
+            return <div key={i}>{comp.data.text}</div>;
         })
 
         const tasks = this.getComponents(constants.TASK)
         .map((comp, i) => {
-            return <div className="task breakWord" key={i}>
+            return <div className="task" key={i}>
                 <input 
                     type="checkbox" 
                     checked={comp.data.finished}
@@ -84,7 +92,7 @@ const Entry = React.createClass({
                 >
                     { " " + comp.data.url }
                 </a>;
-            return <div className="breakWord" key={1}>
+            return <div key={1}>
                 {content}
             </div>
         });

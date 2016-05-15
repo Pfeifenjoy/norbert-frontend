@@ -1,7 +1,13 @@
+/**
+ * @author Arwed Mett
+ */
 import React, { Component } from "react";
 import RecommendationStore from "../stores/RecommendationStore";
 import { acceptRecommendation, rejectRecommendation } from "../actions/RecommendationActions";
 
+/**
+ * This is a tile containing one recommendation.
+ */
 export default class Recommendation extends Component {
     constructor(props) {
         super(props);

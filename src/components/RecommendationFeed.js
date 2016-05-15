@@ -1,8 +1,14 @@
+/**
+ * @author Arwed Mett
+ */
 import React, { Component } from "react";
 import RecommendationStore from "../stores/RecommendationStore";
 import Recommendation from "./Recommendation";
 import { updateRecommendations } from "../actions/RecommendationActions";
 
+/**
+ * The recommendation feed which displayes recommendations for the user.
+ */
 export default class RecommendationFeed extends Component {
     constructor() {
         super();

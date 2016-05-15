@@ -1,11 +1,14 @@
 /*
-	@author Arwed Mett, Dominic Steinhauser
+ * @author Arwed Mett, Dominic Steinhauser
 */
 
 import React, {Component} from "react";
 import { logout } from "../actions/UserActions";
 import { Link } from "react-router";
 
+/**
+ * This is the navigation bar which is displayed at the top of the page.
+ */
 export default class TopBar extends Component {
     render() {
         return <nav className="topBar navbar navbarcolor navbar-fixed-top navbar-default" >
