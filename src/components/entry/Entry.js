@@ -5,6 +5,7 @@ import React, {Component} from "react";
 import { startEdit, updateEntry, hideInformation } from "../../actions/EntryActions";
 import EntryStore from "../../stores/EntryStore";
 import constants from "../../constants";
+import moment from "moment";
 
 
 /**
@@ -97,6 +98,13 @@ const Entry = React.createClass({
             </div>
         });
 
+        const notifications = this.getComponents(constants.NOTIFICATION)
+        .map((comp, i) => {
+            return <div key={i}>
+                <p>{(() => {return moment(comp.data.date).fromNow()})()}</p>
+            </div>
+        });
+
         const notificationSign = this.hasCompWithType(constants.NOTIFICATION) ? <span className="notificationSign fa fa-bell" /> : [];
         const documentSign = this.hasCompWithType(constants.DOCUMENT) ? <span className="documentSign fa fa-file" /> : [];
         
@@ -122,6 +130,7 @@ const Entry = React.createClass({
                 {descriptions}
                 {tasks}
                 {documents}
+                {notifications}
                 {signs}
             </div>;
     },
