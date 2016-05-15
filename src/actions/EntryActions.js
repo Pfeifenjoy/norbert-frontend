@@ -139,3 +139,21 @@ export function uploadFile(file, entry) {
         startEdit(entry.id);
     });
 }
+
+
+/**
+ * Hide an information in the newsfeed of the user.
+ */
+
+export function hideInformation(id) {
+    return $.ajax({
+        url: `${ConfigStore.apiLocation}information/${id}`,
+        type: "DELETE"
+    })
+    .done(() => {
+        dispatcher.dispatch({
+            type: constants.HIDE_INFORMATION,
+            id
+        });
+    });
+}

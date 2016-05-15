@@ -51,6 +51,11 @@ class EntryStore extends EventEmitter {
         })
     }
 
+    deleteEntry(id) {
+        this.data.entries.splice(this.getEntryIndex(id), 1);
+        this.emit("change");
+    }
+
     handleActions(action) {
         switch(action.type) {
             case constants.UPDATE_ENTRIES: {
@@ -69,9 +74,9 @@ class EntryStore extends EventEmitter {
                 this.emit("updateEntry", action.id)
                 break;
             }
+            case constants.HIDE_INFORMATION: {}
             case constants.DELETE_ENTRY: {
-                this.data.entries.splice(this.getEntryIndex(action.id), 1);
-                this.emit("change");
+                this.deleteEntry(action.id)
                 break;
             }
             case constants.START_EDIT_ENTRY: {

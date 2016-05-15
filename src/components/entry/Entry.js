@@ -2,7 +2,7 @@
  * @author Arwed Mett
  */
 import React, {Component} from "react";
-import { startEdit, updateEntry } from "../../actions/EntryActions";
+import { startEdit, updateEntry, hideInformation } from "../../actions/EntryActions";
 import EntryStore from "../../stores/EntryStore";
 import constants from "../../constants";
 
@@ -105,7 +105,12 @@ const Entry = React.createClass({
         const edit = this.state.data.type === constants.ENTRY ? <div
             className={"fa fa-pencil modifyButton " + (this.state.mouseOver ? "" : "hidden")} 
             onClick={startEdit.bind({}, this.props.id)}>
-        </div> : [];
+        </div>
+            :
+        <div
+            className={`fa fa-times modifyButton ${this.state.mouseOver ? "" : "hidden"}`}
+            onClick={this.hideInformation}
+        />;
 
         const className = (this.state.data.type === constants.ENTRY ? "entry" : "information")
                             + " newsfeedObject";
@@ -132,6 +137,10 @@ const Entry = React.createClass({
         tasks[i].data.finished = !tasks[i].data.finished;
         this.setState({ data: this.state.data });
         updateEntry(this.state.data, this.props.id);
+    },
+
+    hideInformation(oEvent) {
+        hideInformation(this.props.id);
     }
 });
 

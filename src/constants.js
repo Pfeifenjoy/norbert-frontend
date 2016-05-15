@@ -16,6 +16,9 @@ const constants = {
     START_EDIT_ENTRY: "START_EDIT_ENTRY",
     STOP_EDIT_ENTRY: "STOP_EDIT_ENTRY",
 
+    //Information
+    HIDE_INFORMATION: "HIDE_INFORMATION",
+
     //Entry types
     DESCRIPTION: "components-description",
     TASK: "components-task",
