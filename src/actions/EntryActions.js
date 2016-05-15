@@ -23,7 +23,6 @@ export function updateEntries() {
         method: "GET"
     })
     .done(entries => {
-        console.log(entries);
         dispatcher.dispatch({
             type: constants.UPDATE_ENTRIES,
             entries
