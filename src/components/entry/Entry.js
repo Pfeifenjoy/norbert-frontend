@@ -86,7 +86,7 @@ const Entry = React.createClass({
         const documents = this.getComponents(constants.DOCUMENT)
         .map((comp, i) => {
             let content = comp.data.processing ? 
-                <p>File wird verarbeitet...</p> 
+                <p>Datei wird verarbeitet...</p> 
                 :
                 <a 
                     className="fa fa-file"
