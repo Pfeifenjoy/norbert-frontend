@@ -72,13 +72,14 @@ const Entry = React.createClass({
 
         const tasks = this.getComponents(constants.TASK)
         .map((comp, i) => {
+            let finished = JSON.parse(comp.data.finished);
             return <div className="task" key={i}>
                 <input 
                     type="checkbox" 
-                    checked={comp.data.finished}
+                    checked={finished}
                     onChange={this.handleTaskChange.bind(this, i)}
                 />
-                <span className={comp.data.finished ? "lineThrough" : ""}>{comp.data.text}</span>
+                <span className={finished ? "lineThrough" : ""}>{comp.data.text}</span>
             </div>
         })
 
@@ -143,7 +144,7 @@ const Entry = React.createClass({
 
     handleTaskChange(i, oEvent) {
         let tasks = this.getComponents(constants.TASK);
-        tasks[i].data.finished = !tasks[i].data.finished;
+        tasks[i].data.finished = !JSON.parse(tasks[i].data.finished);
         this.setState({ data: this.state.data });
         updateEntry(this.state.data, this.props.id);
     },

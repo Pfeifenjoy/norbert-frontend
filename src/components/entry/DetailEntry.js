@@ -234,7 +234,7 @@ function createTask(component, change) {
         >
             <input 
                 type="checkbox"
-                checked={component.data.finished}
+                checked={JSON.parse(component.data.finished)}
                 onChange={onChecked}
             />
         </span>
@@ -247,7 +247,7 @@ function createTask(component, change) {
         />
     </div>;
     function onChecked(oEvent) {
-        component.data.finished = !component.data.finished;
+        component.data.finished = !JSON.parse(component.data.finished);
         change(component);
     }
     function onChange(oEvent) {

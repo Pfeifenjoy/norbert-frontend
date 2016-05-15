@@ -23,6 +23,7 @@ export function updateEntries() {
         method: "GET"
     })
     .done(entries => {
+        console.log(entries);
         dispatcher.dispatch({
             type: constants.UPDATE_ENTRIES,
             entries
@@ -62,7 +63,7 @@ export function updateEntry(entry) {
         data: entry
     })
     .done(entry => {
-        console.log("entry updated 1");
+        console.log("entry updated " + entry.id);
         let { id } = entry;
         dispatcher.dispatch({
             type: constants.UPDATE_ENTRY,
