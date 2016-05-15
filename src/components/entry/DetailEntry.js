@@ -106,7 +106,10 @@ export default class DetailEntry extends Component {
     }
     addNotification() {
         this.addComponent({
-            type: constants.NOTIFICATION
+            type: constants.NOTIFICATION,
+            data: {
+                date: new Date()
+            }
         });
     }
     addDocument() {
@@ -179,6 +182,13 @@ function createDescription(component, change) {
 
 
 function createNotification(component, change) {
+    let date = new Date(component.data.date);
+    let day = date.getDate() + "";
+    let month = date.getMonth() + "";
+    let year = date.getFullYear() + "";
+
+    day = day.length == 2 ? day : "0"+day;
+    month = month.length == 2 ? month : "0"+month;
     return <div
             className="input-group notification"
         >
@@ -187,12 +197,12 @@ function createNotification(component, change) {
             onChange={onChange}
             type="date"
             className="form-control"
-            value={component.data.date}
+            value={`${year}-${month}-${day}`}
         />
     </div>;
 
     function onChange(oEvent) {
-        component.data.date = oEvent.target.value;
+        component.data.date = Date.parse(oEvent.target.value);
         console.log(oEvent.target.value);
         change(component);
     }
