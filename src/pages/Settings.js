@@ -2,6 +2,10 @@
 	@author Dominic Steinhauser, Arwed Mett
 */
 
+/*
+		This is the seetings webpage. It offers the change password function and delete account function. 
+*/
+
 import React, {Component} from "react";
 import UserStore from "../stores/UserStore";
 import { changePassword } from "../actions/UserActions";
@@ -30,6 +34,7 @@ export default class Settings extends Component {
 	
     render() {
 		
+				
 		const oldPasswordState = "form-group" + (this.state.submitFailed && this.state.password.length < 10 ? " has-error" : "");
 		const passwordState = "form-group" + (this.state.submitFailed && this.state.password.length < 10 ? " has-error" : "");
 		const rePasswordState = "form-group" + (this.state.submitFailed && this.state.password.length < 10 ? " has-error" : "");
@@ -77,6 +82,12 @@ export default class Settings extends Component {
 		
         return <div className="main_bg">
 		<div className=" settings container"> 
+		
+{/*
+	Panel change password
+*/}
+
+
 			<div className=" panel panel-default">
             <div className=" panel-heading">
                 <h3 className="panel-title">Passwort ändern</h3>
@@ -93,8 +104,20 @@ export default class Settings extends Component {
                     </fieldset>
                 </form>
             </div>
-        </div>
-        {deleteAccount}
+			</div>
+		
+{/*
+	Panel delete Account
+*/}
+		
+			<div className=" panel panel-default">
+			<div className=" panel-heading">
+				<h3 className="panel-title">Account löschen</h3>
+			</div>
+			<div className="panel-body">
+				{deleteAccount}
+			</div>
+			</div>
 		</div>      
 	</div>
 		

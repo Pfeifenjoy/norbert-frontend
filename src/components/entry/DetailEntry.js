@@ -76,7 +76,7 @@ export default class DetailEntry extends Component {
                             <MenuItem onClick={this.addTask.bind(this)}>Aufgabe</MenuItem>
                             <MenuItem onClick={this.addText.bind(this)}>Text</MenuItem>
                             <MenuItem onClick={this.addNotification.bind(this)}>Erinnerung</MenuItem>
-                            <MenuItem onClick={this.addDocument.bind(this)}>Document</MenuItem>
+                            <MenuItem onClick={this.addDocument.bind(this)}>Dokument</MenuItem>
                             <input ref="fileUploader" type="file" style={{display: "none"}} />
                         </SplitButton>
                     </ButtonGroup>
