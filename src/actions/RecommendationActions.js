@@ -28,15 +28,12 @@ export function updateRecommendations() {
 /**
  * Move a recommendation into the newsfeed.
  */
-export function acceptRecommendation(recommendation) {
+export function acceptRecommendation(rec) {
+    let recommendation = Object.assign({}, rec);
     delete recommendation.id;
     return createEntry(recommendation)
-    .then(entry => {
-        let { id } = entry;
-        dispatcher.dispatch({
-            type: constants.DELETE_RECOMMENDATION,
-            id
-        })
+    .done(() => {
+        rejectRecommendation(rec);
     })
 }
 
