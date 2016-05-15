@@ -6,7 +6,7 @@ import React, {Component} from "react";
 import Entry from "./entry/Entry.js";
 import EntryStore from "../stores/EntryStore";
 import { Button, Col, Row } from "react-bootstrap";
-import { updateEntries, createEntrys } from "../actions/EntryActions";
+import { updateEntries, createEntry } from "../actions/EntryActions";
 import DetailEntry from "./entry/DetailEntry";
 
 
@@ -51,12 +51,8 @@ export default class Newsfeed extends Component {
 
 
         return <div className="newsfeed">
-            <Row className="entries">
-                {entries}
-            </Row>
-            
             <Row>
-                <Col xs={12} className="footer">
+                <Col xs={12} className="header">
                     <Button
                         className="fa fa-plus addButton"
                         bsStyle="primary"
@@ -64,6 +60,10 @@ export default class Newsfeed extends Component {
                     />
                 </Col>
             </Row>
+            <Row className="entries">
+                {entries}
+            </Row>
+            
             <DetailEntry />
         </div>;
     }
