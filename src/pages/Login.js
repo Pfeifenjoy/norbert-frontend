@@ -68,7 +68,7 @@ const Login = React.createClass({
 
         //username input field
         const username = <div className={usernameState}>
-            <input className="form-control" placeholder="Username"
+            <input className="form-control" placeholder="Benutzername"
                value={this.state.username}
                onChange={this.handleUsernameChange} name="username"
                disabled={this.state.loading}
@@ -80,7 +80,7 @@ const Login = React.createClass({
 
         //password input field
         const password = <div className={passwordState}>
-            <input className="form-control" placeholder="Password"
+            <input className="form-control" placeholder="Passwort"
                value={this.state.password}
                onChange={this.handlePasswordChange} name="password"
                type="password"
@@ -94,7 +94,7 @@ const Login = React.createClass({
         //render the main form.
         const loginForm = <div className="panel panel-default">
             <div className="panel-heading">
-                <h3 className="panel-title">Please sign in</h3>
+                <h3 className="panel-title">Anmeldung</h3>
             </div>
             <div className="panel-body">
                 {loginFailed}
@@ -111,7 +111,7 @@ const Login = React.createClass({
                             disabled={this.state.loading} />
                     </fieldset>
                 </form>
-                <span>Or <Link to="register">register</Link></span>
+                <span>Oder <Link to="register">Registrieren</Link></span>
             </div>
         </div>;
         return <div id="login_wrapper">
