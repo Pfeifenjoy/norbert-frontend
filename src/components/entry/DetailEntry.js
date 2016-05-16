@@ -227,7 +227,7 @@ function createNotification(component, change) {
 
 function createDocument(component, change) {
     let content = component.data.processing ? 
-        <p>File wird verarbeitet...</p> 
+        <p>Datei wird verarbeitet...</p> 
         :
         <a 
             className="fa fa-file"
