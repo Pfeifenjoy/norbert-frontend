@@ -119,16 +119,18 @@ function updateUploading(entry) {
         entry.components.forEach(comp => {
             processing = !!comp.data.processing || processing;
         })
+        //recheck for updates
         if(processing) setTimeout(updateUploading.bind(null, entry), 400);
-        else {
-            dispatcher.dispatch({
-                type: constants.UPDATE_ENTRY,
-                entry, id: entry.id
-            });
-        }
+        //Always show updates
+        dispatcher.dispatch({
+            type: constants.UPDATE_ENTRY,
+            entry, id: entry.id
+        });
     })
 }
 
+let queuee = $.Deferred();
+queuee.resolve();
 /**
  * Upload a file to a specific entry component.
  */
@@ -139,27 +141,30 @@ export function uploadFile(file, entry) {
             processing: true
         }
     })
-    return updateEntry(entry)
-    .done(entry => {
-        let data = new FormData;
-        data.append("file", file);
-        data.append("entryId", entry.id);
-        data.append("componentId", entry.components[entry.components.length - 1].id);
-        return $.ajax({
-            method: "POST",
-            url: ConfigStore.apiLocation + "files",
-            data,
-            contentType: false,
-            processData: false
+    queuee = queuee.done(() => {
+        return updateEntry(entry)
+        .done(entry => {
+            let data = new FormData;
+            data.append("file", file);
+            data.append("entryId", entry.id);
+            data.append("componentId", entry.components[entry.components.length - 1].id);
+            return $.ajax({
+                method: "POST",
+                url: ConfigStore.apiLocation + "files",
+                data,
+                contentType: false,
+                processData: false
+            })
+        })
+        .done(updateUploading.bind(null, entry))
+        .done(() => {
+            return startEdit(entry.id);
+        })
+        .fail(e => {
+            console.error("Could not upload file: " + e);
         })
     })
-    .done(updateUploading.bind(null, entry))
-    .done(() => {
-        return startEdit(entry.id);
-    })
-    .fail(e => {
-        console.error("Could not upload file: " + e);
-    })
+    return queuee;
 }
 
 
