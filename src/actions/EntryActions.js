@@ -140,11 +140,11 @@ export function uploadFile(file, entry) {
         }
     })
     return updateEntry(entry)
-    .done(() => {
+    .done(entry => {
         let data = new FormData;
         data.append("file", file);
         data.append("entryId", entry.id);
-        data.append("componentId", entry.components.length - 1);
+        data.append("componentId", entry.components[entry.components.length - 1].id);
         return $.ajax({
             method: "POST",
             url: ConfigStore.apiLocation + "files",
