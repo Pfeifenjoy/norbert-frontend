@@ -6,6 +6,8 @@ import {Modal, Button, ButtonGroup, SplitButton, MenuItem, FormControl} from "re
 import { deleteEntry, updateEntry, stopEdit, uploadFile } from "../../actions/EntryActions";
 import EntryStore from "../../stores/EntryStore";
 import constants from "../../constants";
+import moment from "moment";
+import DateTimeField from "react-bootstrap-datetimepicker";
 
 export default class DetailEntry extends Component {
 
@@ -180,7 +182,7 @@ export default class DetailEntry extends Component {
 function createDescription(component, change) {
     let rows = component.data.text.split("\n").length;
     rows = rows >= 5 ? rows : 5;
-    return <Input
+    return <FormControl
         type="textarea"
         placeholder="Beschreibung..."
         value={component.data.text}
@@ -210,19 +212,16 @@ function createNotification(component, change) {
     return <div
             className="input-group notification"
         >
-            <span className="input-group-addon"><span className="fa fa-bell" /></span>
-        <input
-            onChange={onChange}
-            type="date"
-            className="form-control"
-            value={`${year}-${month}-${day}`}
-        />
+            <DateTimeField
+                dateTime={parseInt(component.data.date)}
+                onChange={onChange}
+                className="form-control"
+            />
     </div>;
 
-    function onChange(oEvent) {
-        component.data.date = Date.parse(oEvent.target.value);
-        console.log(oEvent.target.value);
-        change(component);
+    function onChange(time) {
+        component.data.date = time.format("x")
+        change(component)
     }
 }
 

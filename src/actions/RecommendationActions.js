@@ -37,11 +37,8 @@ export function acceptRecommendation(recommendation) {
             type: constants.CREATE_ENTRY,
             entry
         });
-        dispatcher.dispatch({
-            type: constants.DELETE_RECOMMENDATION,
-            id: entry.id
-        });
-    });
+    })
+    .done(updateRecommendations);
 }
 
 /**
