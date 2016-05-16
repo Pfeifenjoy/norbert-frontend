@@ -22,7 +22,21 @@ export default class DetailEntry extends Component {
             this.setState({
                 data: entry
             })
+            this.handleUpdate();
         })
+        this.handleUpdate();
+    }
+
+    handleUpdate() {
+        if(this.handleEntryUpdate) EntryStore.removeListener("updateChange", this.handleEntryUpdate)
+        this.handleEntryUpdate = id => {
+            if(EntryStore.editEntry.id === id) {
+                this.setState({
+                    data: EntryStore.editEntry
+                })
+            }
+        }
+        EntryStore.on("updateEntry", this.handleEntryUpdate);
     }
     render() {
         if(!this.state.data) return <div hidden="true" />;

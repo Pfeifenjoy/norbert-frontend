@@ -92,6 +92,7 @@ const Entry = React.createClass({
                 <a 
                     className="fa fa-file"
                     href={"http://" + comp.data.url}
+                    target="_blank"
                 >
                     {" " + filename}
                 </a>;
