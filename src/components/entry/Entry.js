@@ -85,6 +85,7 @@ const Entry = React.createClass({
 
         const documents = this.getComponents(constants.DOCUMENT)
         .map((comp, i) => {
+            let filename = /([^\/?]*)\??[^\/?]*$/.exec(decodeURIComponent(comp.data.url))[1] || "Kein Name";
             let content = comp.data.processing ? 
                 <p>Datei wird verarbeitet...</p> 
                 :
@@ -92,7 +93,7 @@ const Entry = React.createClass({
                     className="fa fa-file"
                     href={"http://" + comp.data.url}
                 >
-                    { " " + comp.data.url }
+                    {" " + filename}
                 </a>;
             return <div key={1}>
                 {content}
