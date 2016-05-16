@@ -220,7 +220,7 @@ function createNotification(component, change) {
     </div>;
 
     function onChange(time) {
-        component.data.date = time.format("x")
+        component.data.date = time
         change(component)
     }
 }
