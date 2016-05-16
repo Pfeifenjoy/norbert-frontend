@@ -2,7 +2,7 @@
  * @author Arwed Mett
  */
 import React, { Component } from "react";
-import {Modal, Button, ButtonGroup, SplitButton, MenuItem, Input} from "react-bootstrap";
+import {Modal, Button, ButtonGroup, SplitButton, MenuItem, FormControl} from "react-bootstrap";
 import { deleteEntry, updateEntry, stopEdit, uploadFile } from "../../actions/EntryActions";
 import EntryStore from "../../stores/EntryStore";
 import constants from "../../constants";
@@ -22,7 +22,21 @@ export default class DetailEntry extends Component {
             this.setState({
                 data: entry
             })
+            this.handleUpdate();
         })
+        this.handleUpdate();
+    }
+
+    handleUpdate() {
+        if(this.handleEntryUpdate) EntryStore.removeListener("updateChange", this.handleEntryUpdate)
+        this.handleEntryUpdate = id => {
+            if(EntryStore.editEntry.id === id) {
+                this.setState({
+                    data: EntryStore.editEntry
+                })
+            }
+        }
+        EntryStore.on("updateEntry", this.handleEntryUpdate);
     }
     render() {
         if(!this.state.data) return <div hidden="true" />;
@@ -38,7 +52,7 @@ export default class DetailEntry extends Component {
         return <Modal show={true} onHide={this.handleEditClose.bind(this)} className="detailEntry">
                 <Modal.Header>
                     <Modal.Title>
-                         <Input
+                         <FormControl
                              type="text"
                              className="title"
                              value={this.state.data.title}
@@ -53,7 +67,7 @@ export default class DetailEntry extends Component {
                     <div className="col-lg-7">
                     <div className="input-group tags">
                         <span className="input-group-addon">Tags: </span>
-                        <Input
+                        <FormControl
                             type="text"
                             placeholder="#awesome"
                             value={hashtags}
@@ -220,7 +234,7 @@ function createDocument(component, change) {
             className="fa fa-file"
             href={"http://" + component.data.url}
         >
-            { " " + component.data.url }
+            { " " + component.data.name }
         </a>
     return <div>
         {content}

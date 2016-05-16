@@ -62,7 +62,6 @@ export function updateEntry(entry) {
         data: entry
     })
     .done(entry => {
-        console.log("entry updated " + entry.id);
         let { id } = entry;
         dispatcher.dispatch({
             type: constants.UPDATE_ENTRY,
@@ -108,6 +107,29 @@ export function stopEdit(id) {
 }
 
 /**
+ * Update the status of a processing file has changed.
+ */
+function updateUploading(entry) {
+    $.ajax({
+        url: ConfigStore.apiLocation + "entries/" + entry.id,
+        method: "GET"
+    })
+    .done(entry => {
+        let processing = false;
+        entry.components.forEach(comp => {
+            processing = !!comp.data.processing || processing;
+        })
+        if(processing) setTimeout(updateUploading.bind(null, entry), 400);
+        else {
+            dispatcher.dispatch({
+                type: constants.UPDATE_ENTRY,
+                entry, id: entry.id
+            });
+        }
+    })
+}
+
+/**
  * Upload a file to a specific entry component.
  */
 export function uploadFile(file, entry) {
@@ -130,13 +152,14 @@ export function uploadFile(file, entry) {
             contentType: false,
             processData: false
         })
-        .fail(e => {
-            console.error(e);
-        })
     })
+    .done(updateUploading.bind(null, entry))
     .done(() => {
-        startEdit(entry.id);
-    });
+        return startEdit(entry.id);
+    })
+    .fail(e => {
+        console.error("Could not upload file: " + e);
+    })
 }
 
 

@@ -71,6 +71,9 @@ class EntryStore extends EventEmitter {
             }
             case constants.UPDATE_ENTRY: {
                 this.data.entries[this.getEntryIndex(action.id)] = action.entry;
+                if(action.id === this.editEntry.id) {
+                    this.data.editEntry = action.entry;
+                }
                 this.emit("updateEntry", action.id)
                 break;
             }

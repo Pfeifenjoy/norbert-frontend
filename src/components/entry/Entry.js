@@ -66,43 +66,43 @@ const Entry = React.createClass({
 
 
         const descriptions = this.getComponents(constants.DESCRIPTION)
-        .map((comp, i) => {
-            return <div key={i}>{comp.data.text}</div>;
+        .map(comp => {
+            return <div key={comp.id}>{comp.data.text}</div>;
         })
 
         const tasks = this.getComponents(constants.TASK)
-        .map((comp, i) => {
+        .map(comp => {
             let finished = JSON.parse(comp.data.finished);
-            return <div className="task" key={i}>
+            return <div className="task" key={comp.id}>
                 <input 
                     type="checkbox" 
                     checked={finished}
-                    onChange={this.handleTaskChange.bind(this, i)}
+                    onChange={this.handleTaskChange.bind(this, comp.id)}
                 />
                 <span className={finished ? "lineThrough" : ""}>{comp.data.text}</span>
             </div>
         })
 
         const documents = this.getComponents(constants.DOCUMENT)
-        .map((comp, i) => {
-            let filename = /([^\/?]*)\??[^\/?]*$/.exec(decodeURIComponent(comp.data.url))[1] || "Kein Name";
+        .map(comp => {
             let content = comp.data.processing ? 
                 <p>Datei wird verarbeitet...</p> 
                 :
                 <a 
                     className="fa fa-file"
                     href={"http://" + comp.data.url}
+                    target="_blank"
                 >
-                    {" " + filename}
+                    {" " + comp.data.name}
                 </a>;
-            return <div key={1}>
+            return <div key={comp.id}>
                 {content}
             </div>
         });
 
         const notifications = this.getComponents(constants.NOTIFICATION)
-        .map((comp, i) => {
-            return <div key={i}>
+        .map(comp => {
+            return <div key={comp.id}>
                 <p>{(() => {return moment(new Date(parseInt(comp.data.date))).locale("de").fromNow()})()}</p>
             </div>
         });
@@ -143,9 +143,9 @@ const Entry = React.createClass({
         this.setState({mouseOver: false});
     },
 
-    handleTaskChange(i, oEvent) {
-        let tasks = this.getComponents(constants.TASK);
-        tasks[i].data.finished = !JSON.parse(tasks[i].data.finished);
+    handleTaskChange(id, oEvent) {
+        let task = this.state.data.components.find(comp => comp.id === id);
+        task.data.finished = !JSON.parse(task.data.finished);
         this.setState({ data: this.state.data });
         updateEntry(this.state.data, this.props.id);
     },
