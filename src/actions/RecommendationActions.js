@@ -6,7 +6,6 @@ import dispatcher from "../dispatcher";
 import constants from "../constants";
 import $ from "jquery";
 import ConfigStore from "../stores/ConfigStore";
-import { createEntry } from "./EntryActions";
 import RecommendationStore from "../stores/RecommendationStore";
 
 /**
@@ -28,13 +27,21 @@ export function updateRecommendations() {
 /**
  * Move a recommendation into the newsfeed.
  */
-export function acceptRecommendation(rec) {
-    let recommendation = Object.assign({}, rec);
-    delete recommendation.id;
-    return createEntry(recommendation)
-    .done(() => {
-        rejectRecommendation(rec);
+export function acceptRecommendation(recommendation) {
+    return $.ajax({
+        url: ConfigStore.apiLocation + "recommendations/" + recommendation.id,
+        method: "POST"
     })
+    .done(entry => {
+        dispatcher.dispatch({
+            type: constants.CREATE_ENTRY,
+            entry
+        });
+        dispatcher.dispatch({
+            type: constants.DELETE_RECOMMENDATION,
+            id: entry.id
+        });
+    });
 }
 
 /**

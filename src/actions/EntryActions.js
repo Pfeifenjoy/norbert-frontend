@@ -62,7 +62,6 @@ export function updateEntry(entry) {
         data: entry
     })
     .done(entry => {
-        console.log("entry updated " + entry.id);
         let { id } = entry;
         dispatcher.dispatch({
             type: constants.UPDATE_ENTRY,
